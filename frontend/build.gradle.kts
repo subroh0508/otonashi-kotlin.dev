@@ -29,7 +29,10 @@ dependencies {
 kotlinFrontend {
     sourceMaps = true
 
-    npm {
+    npm { 
+        dependency("core-js", "3.0.0")
+        dependency("kotlin-playground")
+
         devDependency("css-loader")
         devDependency("style-loader")
         devDependency("file-loader")
