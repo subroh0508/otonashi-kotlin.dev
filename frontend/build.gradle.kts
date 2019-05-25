@@ -20,18 +20,25 @@ repositories {
 }
 
 dependencies {
-    implementation(Dep.Kotlin.js)
-    implementation(Dep.Kotlin.jsHtml)
-    implementation(Dep.Kotlin.jsWrapper)
-    testImplementation(Dep.Kotlin.jsTest)
+    implementation(Dep.KotlinJs.stdlib)
+    implementation(Dep.KotlinJs.html)
+    implementation(Dep.KotlinJs.react)
+    implementation(Dep.KotlinJs.reactDom)
+    implementation(Dep.KotlinJs.wrappers)
+    implementation(Dep.KotlinJs.materialUi)
+    testImplementation(Dep.KotlinJs.test)
 }
 
 kotlinFrontend {
     sourceMaps = true
 
-    npm { 
-        dependency("core-js", "3.0.0")
+    npm {
         dependency("kotlin-playground")
+        dependency("react")
+        dependency("react-dom")
+        dependency("react-router")
+        dependency("react-markdown")
+        dependency("inline-style-prefixer")
 
         devDependency("css-loader")
         devDependency("style-loader")
