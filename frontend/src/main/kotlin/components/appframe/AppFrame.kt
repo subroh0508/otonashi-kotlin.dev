@@ -36,11 +36,13 @@ class AppFrame : RComponent<AppFrameProps, RState>() {
                 div(props.navigationsStyle) {
                     location { locationProps ->
                         listOf(home, story, learn, koans).forEach { nav ->
+                            val isCurrentPage = props.pathname == nav.pathname
+
                             button {
                                 attrs.id = nav.id
                                 attrs.variant = ButtonVariant.text
-                                attrs.color = if (props.pathname == nav.pathname) ButtonColor.primary else ButtonColor.default
-                                if (props.pathname == nav.pathname) attrs["aria-current"] = "page"
+                                attrs.color = if (isCurrentPage) ButtonColor.primary else ButtonColor.default
+                                if (isCurrentPage) attrs["aria-current"] = "page"
                                 attrs.onClickFunction = { locationProps.navigate(nav.pathname) }
 
                                 +nav.displayName
