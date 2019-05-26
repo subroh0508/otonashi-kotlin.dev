@@ -36,7 +36,7 @@ kotlinFrontend {
         dependency("kotlin-playground")
         dependency("react")
         dependency("react-dom")
-        dependency("react-router")
+        dependency("@reach/router")
         dependency("react-markdown")
         dependency("inline-style-prefixer")
 
