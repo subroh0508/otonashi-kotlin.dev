@@ -1,17 +1,23 @@
 package styles
 
-import kotlinx.css.LinearDimension
-import kotlinx.css.padding
-import kotlinx.css.pct
-import kotlinx.css.px
+import kotlinx.css.*
 import materialui.styles.StylesSet
+import materialui.styles.breakpoint.Breakpoint
+import materialui.styles.breakpoint.up
 
 val appFrameStyle: StylesSet.() -> Unit = {
     "root" {
         flexGrow = 1.0
+        zIndex = theme.zIndex.drawer.toInt() + 1
     }
     "toolbar" {
         height = 80.px
+    }
+    "menuButton" {
+        marginRight = (theme.spacing.unit * 2).px
+        (theme.breakpoints.up(Breakpoint.sm)) {
+            display = Display.none
+        }
     }
     "title" {
         height = 100.pct
