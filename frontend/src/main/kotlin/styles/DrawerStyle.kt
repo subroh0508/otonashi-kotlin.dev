@@ -1,11 +1,15 @@
 package styles
 
+import kotlinx.css.Display
 import kotlinx.css.px
 import materialui.styles.StylesSet
 import materialui.styles.breakpoint.Breakpoint
 import materialui.styles.breakpoint.up
 
 val drawerStyle: StylesSet.() -> Unit = {
+    "root" {
+        display = Display.flex
+    }
     "nav" {
         width = 240.px
         flexShrink = 0.0

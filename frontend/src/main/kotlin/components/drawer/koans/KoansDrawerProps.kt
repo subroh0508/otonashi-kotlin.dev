@@ -1,13 +1,15 @@
-package components.koans
+package components.drawer.koans
 
 import org.w3c.dom.events.Event
-import react.RProps
+import shared.reachrouter.RoutingProps
 
-external interface KoansDrawerProps : RProps {
+external interface KoansDrawerProps : RoutingProps {
     var mobileMenuOpen: Boolean
     var onClose: (Event) -> Unit
 }
 
+val KoansDrawerProps.rootStyle: String
+    get() = asDynamic()["classes"]["root"] as String
 val KoansDrawerProps.navStyle: String
     get() = asDynamic()["classes"]["nav"] as String
 val KoansDrawerProps.paperStyle: String

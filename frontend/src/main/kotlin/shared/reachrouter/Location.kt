@@ -33,6 +33,12 @@ external interface NavigateOption {
 
 fun LocationProps.navigate(href: String) = navigate(href, jsObject {  })
 
+fun LocationProps.navigate(href: String, replace: Boolean = false) = navigate(href, jsObject { this.replace = replace })
+
 val LocationConsumer: RConsumer<LocationProps> = routerModule.Location as RConsumer<LocationProps>
 
 fun RBuilder.location(render: RBuilder.(LocationProps) -> Unit) = LocationConsumer.invoke(render)
+
+private val navigate = routerModule.navigate as (String, NavigateOption) -> Promise<dynamic>
+
+fun navigate(href: String) = navigate(href, jsObject {  })

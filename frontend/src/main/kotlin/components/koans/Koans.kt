@@ -1,24 +1,32 @@
 package components.koans
 
+import components.koans.sections.Section
+import components.koans.sections.introduction
 import materialui.components.typography.enums.TypographyVariant
 import materialui.components.typography.typography
-import materialui.styles.childWithStyles
 import react.RBuilder
 import react.dom.div
-import styles.koansStyle
+import react.rFunction
+import shared.reachrouter.RoutingProps
 
-val RBuilder.Koans get() = childWithStyles<KoansProps>("Koans", koansStyle) { props ->
-    div(props.rootStyle) {
-        KoansDrawer {
-            attrs.mobileMenuOpen = props.mobileMenuOpen
-            attrs.onClose = props.onDrawerClose
-        }
-        div {
-            typography {
-                attrs.variant = TypographyVariant.h2
-
-                +"Koans"
-            }
-        }
+fun RBuilder.koans() {
+    sectionView(introduction) { task ->
+        div { typography { attrs.variant = TypographyVariant.h1; +task.displayName } }
     }
+}
+
+fun RBuilder.sectionView(section: Section, render: RBuilder.(Section) -> Unit) = (rFunction<RoutingProps>(section.pathname) { props ->
+    props.children()
+}) {
+    attrs.path = section.pathname
+
+    section.children.forEach { task ->
+        (rFunction<RoutingProps>(task.pathname) {
+            render.invoke(this, task)
+        }) { attrs.path = task.pathname }
+    }
+    (rFunction<RoutingProps>("default") {
+        div { typography { attrs.variant = TypographyVariant.h1; +"Default" } }
+    }) { attrs.default = true }
+
 }

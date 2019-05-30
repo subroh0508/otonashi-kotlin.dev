@@ -1,6 +1,7 @@
 package components.appframe
 
-import components.koans.Koans
+import components.drawer.koans.KoansDrawer
+import components.koans.koans
 import kotlinx.html.id
 import kotlinx.html.js.onClickFunction
 import materialui.components.appbar.appBar
@@ -39,7 +40,7 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
     }
 
     private fun onNavButtonClick(props: LocationProps, nav: Navigation) {
-        props.navigate(nav.pathname)
+        props.navigate("/${nav.pathname}")
 
         setState {
             currentPage = nav
@@ -86,16 +87,19 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
                     }
                 }
             }
-        }
 
-        Router {
-            homeView { attrs.path = "/" }
-            storyView { attrs.path = "story" }
-            learningView { attrs.path = "learn" }
-            Koans {
-                attrs.path = "koans"
-                attrs.mobileMenuOpen = state.mobileMenuOpen
-                attrs.onDrawerClose = { onMenuClose() }
+            Router {
+                attrs.location = locationProps.location
+
+                homeView { attrs.path = "/" }
+                storyView { attrs.path = "story" }
+                learningView { attrs.path = "learn" }
+                KoansDrawer {
+                    attrs.path = "koans"
+                    attrs.mobileMenuOpen = state.mobileMenuOpen
+
+                    koans()
+                }
             }
         }
     }
