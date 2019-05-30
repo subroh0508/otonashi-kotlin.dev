@@ -83,7 +83,6 @@ fun RBuilder.renderSections(props: KoansDrawerProps) {
     }
 
     collapse {
-        console.log(window.location.href)
         attrs.`in` = window.location.href.contains("koans/Introduction")
         attrs.unmountOnExit = true
 
