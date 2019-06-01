@@ -23,7 +23,9 @@ import react.RComponent
 import react.dom.div
 import react.rFunction
 import react.setState
-import shared.reachrouter.*
+import shared.reachrouter.Router
+import shared.reachrouter.RoutingProps
+import shared.reachrouter.navigate
 
 class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
     override fun AppFrameState.init() {
@@ -39,8 +41,8 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
         setState { mobileMenuOpen = false }
     }
 
-    private fun onNavButtonClick(props: LocationProps, nav: Navigation) {
-        props.navigate("/${nav.pathname}")
+    private fun onNavButtonClick(nav: Navigation) {
+        navigate("/${nav.pathname}")
 
         setState {
             currentPage = nav
@@ -49,57 +51,53 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
     }
 
     override fun RBuilder.render() {
-        location { locationProps ->
-            appBar(AppBarStyle.root to props.rootStyle) {
-                attrs.color = AppBarColor.default
-                attrs.position = AppBarPosition.relative
+        appBar(AppBarStyle.root to props.rootStyle) {
+            attrs.color = AppBarColor.default
+            attrs.position = AppBarPosition.relative
 
-                toolbar(ToolbarStyle.root to props.toolbarStyle) {
-                    if (state.currentPage.hasDrawer) {
-                        iconButton(IconButtonStyle.root to props.menuButtonStyle) {
-                            attrs.color = ButtonColor.inherit
-                            attrs.onClickFunction = { onMenuButtonClick() }
+            toolbar(ToolbarStyle.root to props.toolbarStyle) {
+                if (state.currentPage.hasDrawer) {
+                    iconButton(IconButtonStyle.root to props.menuButtonStyle) {
+                        attrs.color = ButtonColor.inherit
+                        attrs.onClickFunction = { onMenuButtonClick() }
 
-                            icon { +"menu_icon" }
-                        }
+                        icon { +"menu_icon" }
                     }
+                }
 
-                    typography {
-                        attrs.variant = TypographyVariant.h6
+                typography {
+                    attrs.variant = TypographyVariant.h6
 
-                        +"Le@rning Kotlin"
-                    }
+                    +"Le@rning Kotlin"
+                }
 
-                    div(props.navigationsStyle) {
-                        listOf(home, story, learn, koans).forEach { nav ->
-                            val isCurrentPage = state.currentPage.id == nav.id
+                div(props.navigationsStyle) {
+                    listOf(home, story, learn, koans).forEach { nav ->
+                        val isCurrentPage = state.currentPage.id == nav.id
 
-                            button {
-                                attrs.id = nav.id
-                                attrs.variant = ButtonVariant.text
-                                attrs.color = if (isCurrentPage) ButtonColor.primary else ButtonColor.default
-                                if (isCurrentPage) attrs["aria-current"] = "page"
-                                attrs.onClickFunction = { onNavButtonClick(locationProps, nav) }
+                        button {
+                            attrs.id = nav.id
+                            attrs.variant = ButtonVariant.text
+                            attrs.color = if (isCurrentPage) ButtonColor.primary else ButtonColor.default
+                            if (isCurrentPage) attrs["aria-current"] = "page"
+                            attrs.onClickFunction = { onNavButtonClick(nav) }
 
-                                +nav.displayName
-                            }
+                            +nav.displayName
                         }
                     }
                 }
             }
+        }
 
-            Router {
-                attrs.location = locationProps.location
+        Router {
+            homeView { attrs.path = "/" }
+            storyView { attrs.path = "story" }
+            learningView { attrs.path = "learn" }
+            KoansDrawer {
+                attrs.path = "koans"
+                attrs.mobileMenuOpen = state.mobileMenuOpen
 
-                homeView { attrs.path = "/" }
-                storyView { attrs.path = "story" }
-                learningView { attrs.path = "learn" }
-                KoansDrawer {
-                    attrs.path = "koans"
-                    attrs.mobileMenuOpen = state.mobileMenuOpen
-
-                    koans()
-                }
+                koans()
             }
         }
     }

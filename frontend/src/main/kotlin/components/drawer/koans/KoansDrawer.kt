@@ -18,60 +18,53 @@ import react.RBuilder
 import react.buildElement
 import react.dom.div
 import react.dom.nav
-import react.rFunction
 import shared.reachrouter.navigate
 import styles.drawerStyle
 import kotlin.browser.window
 
-val RBuilder.KoansDrawer get() = rFunction<KoansDrawerProps>("KoansDrawer") {
-    (childWithStyles<KoansDrawerProps>("KoansDrawerImpl", drawerStyle) { props ->
-        val drawerList = buildElement {
-            div { renderSections(props) }
-        }
+val RBuilder.KoansDrawer get() = childWithStyles<KoansDrawerProps>("KoansDrawer", drawerStyle) { props ->
+    val drawerList = buildElement {
+        div { renderSections() }
+    }
 
-        div(classes = props.rootStyle) {
-            nav(classes = props.navStyle) {
-                hidden {
-                    attrs {
-                        implementation = "css"
-                        smUp = true
-                    }
-
-                    drawer(DrawerStyle.paper to props.paperStyle) {
-                        attrs.variant = DrawerVariant.temporary
-                        attrs.anchor = DrawerAnchor.left
-                        attrs.open = props.mobileMenuOpen
-                        attrs.onClose = props.onClose
-                        attrs.ModalProps = jsObject { asDynamic()["keepMounted"] = true }
-
-                        drawerList?.let(this::child)
-                    }
+    div(classes = props.rootStyle) {
+        nav(classes = props.navStyle) {
+            hidden {
+                attrs {
+                    implementation = "css"
+                    smUp = true
                 }
-                hidden {
-                    attrs {
-                        implementation = "css"
-                        xsDown = true
-                    }
 
-                    drawer(DrawerStyle.paper to props.paperStyle) {
-                        attrs.variant = DrawerVariant.permanent
-                        attrs.open = true
+                drawer(DrawerStyle.paper to props.paperStyle) {
+                    attrs.variant = DrawerVariant.temporary
+                    attrs.anchor = DrawerAnchor.left
+                    attrs.open = props.mobileMenuOpen
+                    attrs.onClose = props.onClose
+                    attrs.ModalProps = jsObject { asDynamic()["keepMounted"] = true }
 
-                        drawerList?.let(this::child)
-                    }
+                    drawerList?.let(this::child)
                 }
             }
+            hidden {
+                attrs {
+                    implementation = "css"
+                    xsDown = true
+                }
 
-            props.children()
+                drawer(DrawerStyle.paper to props.paperStyle) {
+                    attrs.variant = DrawerVariant.permanent
+                    attrs.open = true
+
+                    drawerList?.let(this::child)
+                }
+            }
         }
-    }) {
-        attrs.mobileMenuOpen = it.mobileMenuOpen
 
-        it.children()
+        props.children()
     }
 }
 
-fun RBuilder.renderSections(props: KoansDrawerProps) {
+fun RBuilder.renderSections() {
     list(factory = { NAV(mapOf(), it) }) {
         buttonListItem {
             attrs.onClickFunction = {

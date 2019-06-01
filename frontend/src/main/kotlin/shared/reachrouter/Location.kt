@@ -31,10 +31,6 @@ external interface NavigateOption {
     var replace: Boolean
 }
 
-fun LocationProps.navigate(href: String) = navigate(href, jsObject {  })
-
-fun LocationProps.navigate(href: String, replace: Boolean = false) = navigate(href, jsObject { this.replace = replace })
-
 val LocationConsumer: RConsumer<LocationProps> = routerModule.Location as RConsumer<LocationProps>
 
 fun RBuilder.location(render: RBuilder.(LocationProps) -> Unit) = LocationConsumer.invoke(render)

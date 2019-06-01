@@ -1,7 +1,9 @@
 package shared.reachrouter
 
+import react.RBuilder
 import react.RClass
 import react.RProps
+import react.rFunction
 
 @JsModule("@reach/router")
 private external val routerModule: dynamic = definedExternally
@@ -17,3 +19,6 @@ external interface RoutingProps: RProps {
 }
 
 val Router: RClass<RouterProps> = routerModule.Router as RClass<RouterProps>
+
+fun <P: RoutingProps> componentWithPath(displayName: String, render: RBuilder.(P) -> Unit = { it.children() })
+        = rFunction(displayName, render)
