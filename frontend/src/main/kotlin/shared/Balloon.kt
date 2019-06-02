@@ -1,9 +1,8 @@
 package shared
 
-import kotlinx.css.Position
+import kotlinx.css.Display
 import kotlinx.css.TextAlign
-import kotlinx.css.padding
-import kotlinx.css.px
+import kotlinx.css.pct
 import materialui.styles.childWithStyles
 import react.RBuilder
 import react.RProps
@@ -16,8 +15,8 @@ fun RBuilder.balloon(block: RBuilder.() -> Unit) {
         val style = it.asDynamic()["classes"]["root"] as String
 
         styledDiv {
-            css.position = Position.fixed
-            css.padding(horizontal = 24.px)
+            css.display = Display.inlineBlock
+            css.width = 100.pct
             css.textAlign = TextAlign.center
 
             div(style) { it.children() }

@@ -11,10 +11,10 @@ val balloonStyle: StylesSet.() -> Unit = {
         display = Display.inlineBlock
         margin(1.5.em, 0.px)
         padding(7.px, 10.px)
-        minWidth = 120.px
-        maxWidth = 100.pct
+        width = 400.px
         border(3.px, BorderStyle.solid, Color("#555"))
         boxSizing = BoxSizing.borderBox
+        textAlign = TextAlign.center
 
         before {
             position = Position.absolute
@@ -39,6 +39,7 @@ val balloonStyle: StylesSet.() -> Unit = {
         descendants("p") {
             margin(0.px)
             padding(0.px)
+            width = 100.pct
             wordBreak = WordBreak.keepAll
         }
     }
