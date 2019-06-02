@@ -10,5 +10,6 @@ val avatarStyle: StylesSet.() -> Unit = {
         objectFit = ObjectFit.cover
         objectPosition = "0 0"
         margin(horizontal = LinearDimension.auto)
+        paddingTop = 100.px
     }
 }
