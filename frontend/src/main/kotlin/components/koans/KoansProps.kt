@@ -1,15 +1,12 @@
 package components.koans
 
-import org.w3c.dom.events.Event
-import shared.reachrouter.NavigateOption
 import shared.reachrouter.RoutingProps
-import kotlin.js.Promise
 
-external interface KoansProps : RoutingProps {
-    var mobileMenuOpen: Boolean
-    var onDrawerClose: (Event) -> Unit
-    var navigate: (String, NavigateOption) -> Promise<dynamic>
-}
+external interface KoansProps : RoutingProps
 
 val KoansProps.rootStyle: String
     get() = asDynamic()["classes"]["root"] as String
+val KoansProps.playgroundStyle: String
+    get() = asDynamic()["classes"]["playground"] as String
+val KoansProps.taskStyle: String
+    get() = asDynamic()["classes"]["task"] as String

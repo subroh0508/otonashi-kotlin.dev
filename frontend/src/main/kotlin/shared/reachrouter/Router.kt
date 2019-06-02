@@ -3,6 +3,7 @@ package shared.reachrouter
 import react.RBuilder
 import react.RClass
 import react.RProps
+import react.dom.div
 import react.rFunction
 
 @JsModule("@reach/router")
@@ -20,5 +21,20 @@ external interface RoutingProps: RProps {
 
 val Router: RClass<RouterProps> = routerModule.Router as RClass<RouterProps>
 
-fun <P: RoutingProps> componentWithPath(displayName: String, render: RBuilder.(P) -> Unit = { it.children() })
-        = rFunction(displayName, render)
+fun <P: RoutingProps> componentWithPath(
+    displayName: String,
+    render: RBuilder.(P) -> Unit = { div { it.children() } }
+) = rFunction(displayName, render)
+
+fun <P: RoutingProps> RBuilder.nestedRouting(
+    displayName: String,
+    baseUrl: String,
+    vararg components: Pair<String, RBuilder.() -> Unit>
+) = (rFunction<P>(displayName) { it.children() }) {
+    attrs.path = baseUrl
+
+    components.forEach { (path, render) ->
+        (rFunction<RoutingProps>(path) { render() }) { attrs.path = path }
+    }
+}
+

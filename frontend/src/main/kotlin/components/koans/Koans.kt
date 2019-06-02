@@ -8,24 +8,29 @@ import react.RBuilder
 import react.dom.div
 import react.rFunction
 import shared.reachrouter.RoutingProps
-import shared.reachrouter.componentWithPath
 
 fun RBuilder.koans() {
     sectionView(introduction) { task ->
-        div { typography { attrs.variant = TypographyVariant.h1; +task.displayName } }
+        child<TaskProps, Task> {
+            attrs.task = task
+        }
     }
 }
 
-fun RBuilder.sectionView(section: Section, render: RBuilder.(Section) -> Unit)
-        = (componentWithPath<RoutingProps>(section.displayName)) {
-            attrs.path = section.pathname
+fun RBuilder.sectionView(section: Section, render: RBuilder.(Section) -> Unit) {
+    val sectionRClass = rFunction<RoutingProps>(section.displayName) { it.children() }
 
-            section.children.forEach { task ->
-                (rFunction<RoutingProps>(task.pathname) {
-                    render.invoke(this, task)
-                }) { attrs.path = task.pathname }
-            }
-            (rFunction<RoutingProps>("default") {
-                div { typography { attrs.variant = TypographyVariant.h1; +"Default" } }
-            }) { attrs.default = true }
+    sectionRClass {
+        attrs.path = section.pathname
+
+        section.children.forEach { task ->
+            val childRClass = rFunction<RoutingProps>("Playground") { render.invoke(this, task) }
+            childRClass { attrs.path = task.pathname }
         }
+
+        val defaultRClass = rFunction<RoutingProps>("default") {
+            div { typography { attrs.variant = TypographyVariant.h1; +"Default" } }
+        }
+        defaultRClass { attrs.default = true }
+    }
+}
