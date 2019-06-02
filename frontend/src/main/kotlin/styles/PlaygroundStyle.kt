@@ -7,7 +7,8 @@ import materialui.styles.StylesSet
 
 val playgroundStyle: StylesSet.() -> Unit = {
     "root" {
-        flexGrow = 1.0
+        minWidth = 560.px
+        flexGrow = 4.0
 
         children("div") {
             lastChild {

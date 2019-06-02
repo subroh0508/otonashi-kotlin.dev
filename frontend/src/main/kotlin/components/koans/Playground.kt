@@ -101,7 +101,7 @@ class Playground : RComponent<PlaygroundProps, RState>() {
                 code {
                     """
                     fun main() {
-                        println("Hello, World!")
+                        [mark]TODO()[/mark]
                     }
                     """
                 }
