@@ -2,7 +2,8 @@ package components.koans
 
 import react.RProps
 
-interface PlaygroundProps : RProps {
+external interface PlaygroundProps : RProps {
+    var initialCode: String
     var onOpenConsole: (() -> Unit)?
     var onCloseConsole: (() -> Unit)?
     var onChange: ((String) -> Unit)?

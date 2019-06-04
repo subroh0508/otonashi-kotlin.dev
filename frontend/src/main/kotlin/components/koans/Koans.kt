@@ -12,6 +12,7 @@ import shared.reachrouter.RoutingProps
 fun RBuilder.koans(section: Section) {
     sectionView(section) { task ->
         child<TaskComponentProps, TaskComponent> {
+            attrs.section = section
             attrs.task = task
         }
     }

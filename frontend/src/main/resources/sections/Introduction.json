@@ -4,15 +4,15 @@
   "tasks": [
     {
       "displayName": "Hello, World!",
-      "pathname": "Hello,%20world!"
+      "pathname": "HelloWorld"
     },
     {
       "displayName": "引数(名前付き)",
-      "pathname": "Named%20arguments"
+      "pathname": "NamedArguments"
     },
     {
       "displayName": "引数(デフォルト値)",
-      "pathname": "Default%20Arguments"
+      "pathname": "DefaultArguments"
     },
     {
       "displayName": "ラムダ式",
@@ -24,31 +24,31 @@
     },
     {
       "displayName": "データクラス",
-      "pathname": "Data%20classes"
+      "pathname": "DataClasses"
     },
     {
       "displayName": "NULL許可",
-      "pathname": "Nullable%20types"
+      "pathname": "NullableTypes"
     },
     {
       "displayName": "スマートキャスト",
-      "pathname": "Smart%20casts"
+      "pathname": "SmartCasts"
     },
     {
       "displayName": "拡張関数",
-      "pathname": "Extension%20functions"
+      "pathname": "ExtensionFunctions"
     },
     {
       "displayName": "無名オブジェクト",
-      "pathname": "Object%20expressions"
+      "pathname": "ObjectExpressions"
     },
     {
       "displayName": "SAM変換",
-      "pathname": "SAM%20conversions"
+      "pathname": "SAMConversions"
     },
     {
       "displayName": "リスト操作",
-      "pathname": "Extensions%20on%20collections"
+      "pathname": "ExtensionsOnCollections"
     }
   ]
 }

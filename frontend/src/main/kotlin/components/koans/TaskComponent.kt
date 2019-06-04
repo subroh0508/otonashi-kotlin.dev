@@ -1,5 +1,8 @@
 package components.koans
 
+import io.ktor.client.request.get
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.css.*
 import materialui.components.typography.enums.TypographyVariant
 import materialui.components.typography.typography
@@ -10,6 +13,7 @@ import react.dom.div
 import react.dom.p
 import react.setState
 import shared.avatar
+import shared.client
 import styled.styledDiv
 import styles.taskStyle
 
@@ -18,7 +22,16 @@ class TaskComponent : RComponent<TaskComponentProps, TaskComponentState>() {
         message = null
         outputDetail = null
         code = ""
+        initialCode = ""
         isInput = false
+    }
+
+    override fun componentDidMount() {
+        GlobalScope.launch {
+            val code = client.get<String>("http://localhost:8088/sections/" + props.taskPath)
+
+            setState { initialCode = code }
+        }
     }
 
     private fun onReceivedMessage(message: Message, output: String?) {
@@ -49,6 +62,7 @@ class TaskComponent : RComponent<TaskComponentProps, TaskComponentState>() {
             css.position = Position.fixed
 
             child<PlaygroundProps, Playground> {
+                attrs.initialCode = state.initialCode
                 attrs.onReceivedMessage = this@TaskComponent::onReceivedMessage
                 attrs.onChange = { onChangeCode(it) }
             }

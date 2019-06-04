@@ -19,15 +19,9 @@ import kotlin.browser.window
 class Playground : RComponent<PlaygroundProps, RState>() {
     private val observer = MutationObserver(this::onChangeOutput)
 
-    override fun componentDidMount() {
-        createPlayground(".kotlin-code") {
-            onOpenConsole = { this@Playground.onOpenConsole() }
-            onCloseConsole = { this@Playground.onCloseConsole() }
-            onTestPassed = props.onTestPassed
-            onTestFailed = props.onTestFailed
-            onChange = props.onChange
-        }
-    }
+    override fun componentDidMount() = createPlayground()
+
+    override fun componentDidUpdate(prevProps: PlaygroundProps, prevState: RState, snapshot: Any) = createPlayground()
 
     override fun componentWillUnmount() {
         observer.disconnect()
@@ -35,6 +29,17 @@ class Playground : RComponent<PlaygroundProps, RState>() {
 
     override fun shouldComponentUpdate(nextProps: PlaygroundProps, nextState: RState): Boolean {
         return window.document.getElementsByClassName("executable-fragment-wrapper").length == 0
+                || props.initialCode != nextProps.initialCode
+    }
+
+    private fun createPlayground() {
+        createPlayground(".kotlin-code") {
+            onOpenConsole = { this@Playground.onOpenConsole() }
+            onCloseConsole = { this@Playground.onCloseConsole() }
+            onTestPassed = props.onTestPassed
+            onTestFailed = props.onTestFailed
+            onChange = props.onChange
+        }
     }
 
     private fun onOpenConsole() {
@@ -98,13 +103,7 @@ class Playground : RComponent<PlaygroundProps, RState>() {
                 }
                 */
 
-                code {
-                    """
-                    fun main() {
-                        [mark]TODO()[/mark]
-                    }
-                    """
-                }
+                code { props.initialCode }
             }
         }
     }

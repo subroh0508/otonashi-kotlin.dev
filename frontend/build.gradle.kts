@@ -26,6 +26,7 @@ dependencies {
     implementation(Dep.KotlinJs.reactDom)
     implementation(Dep.KotlinJs.wrappers)
     implementation(Dep.KotlinJs.materialUi)
+    implementation(Dep.Ktor.jsClient)
     testImplementation(Dep.KotlinJs.test)
 }
 
