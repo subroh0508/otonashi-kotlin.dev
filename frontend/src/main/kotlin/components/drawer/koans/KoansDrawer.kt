@@ -1,6 +1,6 @@
 package components.drawer.koans
 
-import components.koans.sections.introduction
+import components.koans.sections.Section
 import kotlinext.js.jsObject
 import kotlinx.html.NAV
 import kotlinx.html.js.onClickFunction
@@ -21,6 +21,9 @@ import react.dom.nav
 import shared.reachrouter.navigate
 import styles.drawerStyle
 import kotlin.browser.window
+
+@JsModule("sections/Introduction.json")
+private external val introduction: Section
 
 val RBuilder.KoansDrawer get() = childWithStyles<KoansDrawerProps>("KoansDrawer", drawerStyle) { props ->
     val drawerList = buildElement {
@@ -79,13 +82,13 @@ fun RBuilder.renderSections() {
         attrs.`in` = window.location.href.contains("koans/Introduction")
         attrs.unmountOnExit = true
 
-        introduction.children.forEach { section ->
+        introduction.tasks.forEach { task ->
             buttonListItem {
                 attrs.onClickFunction = {
-                    navigate("/koans/${introduction.pathname}/${section.pathname}")
+                    navigate("/koans/${introduction.pathname}/${task.pathname}")
                 }
 
-                listItemText { attrs.primary { +section.displayName } }
+                listItemText { attrs.primary { +task.displayName } }
             }
         }
     }

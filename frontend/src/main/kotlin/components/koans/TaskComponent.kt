@@ -13,8 +13,8 @@ import shared.avatar
 import styled.styledDiv
 import styles.taskStyle
 
-class Task : RComponent<TaskProps, TaskState>() {
-    override fun TaskState.init() {
+class TaskComponent : RComponent<TaskComponentProps, TaskComponentState>() {
+    override fun TaskComponentState.init() {
         message = null
         outputDetail = null
         code = ""
@@ -36,8 +36,8 @@ class Task : RComponent<TaskProps, TaskState>() {
         }
     }
 
-    private fun RBuilder.root(render: RBuilder.(TaskProps) -> Unit)
-            = (childWithStyles<TaskProps>("Task", taskStyle) { props ->
+    private fun RBuilder.root(render: RBuilder.(TaskComponentProps) -> Unit)
+            = (childWithStyles<TaskComponentProps>("TaskComponent", taskStyle) { props ->
                 div(props.rootStyle) { render(props) }
             }) { }
 
@@ -49,7 +49,7 @@ class Task : RComponent<TaskProps, TaskState>() {
             css.position = Position.fixed
 
             child<PlaygroundProps, Playground> {
-                attrs.onReceivedMessage = this@Task::onReceivedMessage
+                attrs.onReceivedMessage = this@TaskComponent::onReceivedMessage
                 attrs.onChange = { onChangeCode(it) }
             }
 

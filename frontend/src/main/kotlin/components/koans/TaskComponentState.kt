@@ -2,7 +2,7 @@ package components.koans
 
 import react.RState
 
-external interface TaskState : RState {
+external interface TaskComponentState : RState {
     var message: Message?
     var outputDetail: String?
     var code: String

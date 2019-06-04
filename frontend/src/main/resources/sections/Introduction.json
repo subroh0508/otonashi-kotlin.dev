@@ -1,0 +1,54 @@
+{
+  "displayName": "最初の一歩",
+  "pathname": "Introduction",
+  "tasks": [
+    {
+      "displayName": "Hello, World!",
+      "pathname": "Hello,%20world!"
+    },
+    {
+      "displayName": "引数(名前付き)",
+      "pathname": "Named%20arguments"
+    },
+    {
+      "displayName": "引数(デフォルト値)",
+      "pathname": "Default%20Arguments"
+    },
+    {
+      "displayName": "ラムダ式",
+      "pathname": "Lambdas"
+    },
+    {
+      "displayName": "文字列",
+      "pathname": "Strings"
+    },
+    {
+      "displayName": "データクラス",
+      "pathname": "Data%20classes"
+    },
+    {
+      "displayName": "NULL許可",
+      "pathname": "Nullable%20types"
+    },
+    {
+      "displayName": "スマートキャスト",
+      "pathname": "Smart%20casts"
+    },
+    {
+      "displayName": "拡張関数",
+      "pathname": "Extension%20functions"
+    },
+    {
+      "displayName": "無名オブジェクト",
+      "pathname": "Object%20expressions"
+    },
+    {
+      "displayName": "SAM変換",
+      "pathname": "SAM%20conversions"
+    },
+    {
+      "displayName": "リスト操作",
+      "pathname": "Extensions%20on%20collections"
+    }
+  ]
+}
