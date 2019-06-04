@@ -1,0 +1,22 @@
+{
+  "displayName": "プロパティ",
+  "pathname": "Properties",
+  "tasks": [
+    {
+      "displayName": "プロパティ",
+      "pathname": "Properties"
+    },
+    {
+      "displayName": "遅延読み込み",
+      "pathname": "Lazy%20property"
+    },
+    {
+      "displayName": "委譲プロパティ(基礎)",
+      "pathname": "Delegates%20examples"
+    },
+    {
+      "displayName": "委譲プロパティ(実践)",
+      "pathname": "Delegates%20how%20it%20works"
+    }
+  ]
+}

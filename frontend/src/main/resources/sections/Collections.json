@@ -1,0 +1,54 @@
+{
+  "displayName": "コレクション型",
+  "pathname": "Collections",
+  "tasks": [
+    {
+      "displayName": "セット・リスト・マップ",
+      "pathname": "Introduction"
+    },
+    {
+      "displayName": "絞り込む",
+      "pathname": "Filter%20map"
+    },
+    {
+      "displayName": "探す、数える",
+      "pathname": "All%20Any%20and%20other%20predicates"
+    },
+    {
+      "displayName": "変換",
+      "pathname": "FlatMap"
+    },
+    {
+      "displayName": "最大、最小",
+      "pathname": "Max%20min"
+    },
+    {
+      "displayName": "並び替え",
+      "pathname": "Sort"
+    },
+    {
+      "displayName": "合計",
+      "pathname": "Sum"
+    },
+    {
+      "displayName": "グループわけ",
+      "pathname": "GroupBy"
+    },
+    {
+      "displayName": "分割",
+      "pathname": "Partition"
+    },
+    {
+      "displayName": "畳み込み",
+      "pathname": "Fold"
+    },
+    {
+      "displayName": "合わせ技",
+      "pathname": "Compound%20tasks"
+    },
+    {
+      "displayName": "Javaのリファクタ",
+      "pathname": "Get%20used%20to%20new%20style"
+    }
+  ]
+}

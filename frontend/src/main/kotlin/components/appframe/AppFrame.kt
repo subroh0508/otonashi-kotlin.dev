@@ -1,6 +1,6 @@
 package components.appframe
 
-import components.drawer.koans.KoansDrawer
+import components.drawer.koans.koansDrawer
 import components.koans.koans
 import kotlinx.html.id
 import kotlinx.html.js.onClickFunction
@@ -93,11 +93,11 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
             homeView { attrs.path = "/" }
             storyView { attrs.path = "story" }
             learningView { attrs.path = "learn" }
-            KoansDrawer {
+            koansDrawer { sections ->
                 attrs.path = "koans"
                 attrs.mobileMenuOpen = state.mobileMenuOpen
 
-                koans()
+                sections.forEach { koans(it) }
             }
         }
     }

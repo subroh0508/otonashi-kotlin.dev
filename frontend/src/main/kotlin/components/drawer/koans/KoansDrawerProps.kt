@@ -14,3 +14,7 @@ val KoansDrawerProps.navStyle: String
     get() = asDynamic()["classes"]["nav"] as String
 val KoansDrawerProps.paperStyle: String
     get() = asDynamic()["classes"]["paper"] as String
+val KoansDrawerProps.listItemIconStyle: String
+    get() = asDynamic()["classes"]["listItemIcon"] as String
+val KoansDrawerProps.listItemDividerStyle: String
+    get() = asDynamic()["classes"]["listItemDivider"] as String

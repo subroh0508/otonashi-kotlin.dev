@@ -28,4 +28,10 @@ val drawerStyle: StylesSet.() -> Unit = {
             paddingTop = 0.px
         }
     }
+    "listItemIcon" {
+        minWidth = 32.px
+    }
+    "listItemDivider" {
+        marginLeft = 48.px
+    }
 }

@@ -1,0 +1,10 @@
+{
+  "displayName": "ジェネリクス",
+  "pathname": "Generics",
+  "tasks": [
+    {
+      "displayName": "ジェネリック関数",
+      "pathname": "Generic%20functions"
+    }
+  ]
+}

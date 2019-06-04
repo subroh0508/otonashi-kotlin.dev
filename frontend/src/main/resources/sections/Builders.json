@@ -1,0 +1,22 @@
+{
+  "displayName": "ビルダー",
+  "pathname": "Builders",
+  "tasks": [
+    {
+      "displayName": "レシーバー付き関数リテラル",
+      "pathname": "Function%20literals%20with%20receiver"
+    },
+    {
+      "displayName": "マップビルダー",
+      "pathname": "String%20and%20map%20builders"
+    },
+    {
+      "displayName": "関数リテラルの実行",
+      "pathname": "The%20function%20apply"
+    },
+    {
+      "displayName": "ビルダーの使い方",
+      "pathname": "Builders%20how%20it%20works"
+    }
+  ]
+}

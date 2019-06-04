@@ -9,11 +9,8 @@ import react.dom.div
 import react.rFunction
 import shared.reachrouter.RoutingProps
 
-@JsModule("sections/Introduction.json")
-private external val introduction: Section
-
-fun RBuilder.koans() {
-    sectionView(introduction) { task ->
+fun RBuilder.koans(section: Section) {
+    sectionView(section) { task ->
         child<TaskComponentProps, TaskComponent> {
             attrs.task = task
         }
@@ -23,7 +20,6 @@ fun RBuilder.koans() {
 fun RBuilder.sectionView(section: Section, render: RBuilder.(Task) -> Unit) {
     val sectionRClass = rFunction<RoutingProps>(section.displayName) { it.children() }
 
-    //console.log(introduction)
     sectionRClass {
         attrs.path = section.pathname
 

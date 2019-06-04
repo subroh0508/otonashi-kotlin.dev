@@ -1,0 +1,34 @@
+{
+  "displayName": "文法規則",
+  "pathname": "Conventions",
+  "tasks": [
+    {
+      "displayName": "比較",
+      "pathname": "Comparison"
+    },
+    {
+      "displayName": "範囲(in演算子)",
+      "pathname": "In%20range"
+    },
+    {
+      "displayName": "範囲(rangeToメソッド)",
+      "pathname": "Range%20to"
+    },
+    {
+      "displayName": "範囲(forループ)",
+      "pathname": "For%20loop"
+    },
+    {
+      "displayName": "演算子オーバーロード",
+      "pathname": "Operators%20overloading"
+    },
+    {
+      "displayName": "分解宣言",
+      "pathname": "Destructuring%20declarations"
+    },
+    {
+      "displayName": "invokeメソッド",
+      "pathname": "Invoke"
+    }
+  ]
+}
