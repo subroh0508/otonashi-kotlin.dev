@@ -8,4 +8,5 @@ external interface KoansTaskState : RState {
     var code: String
     var initialCode: String
     var isInput: Boolean
+    var index: Int
 }

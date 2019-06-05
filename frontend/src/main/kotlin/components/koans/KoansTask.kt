@@ -7,18 +7,14 @@ import kotlinx.coroutines.launch
 import kotlinx.css.*
 import materialui.components.typography.enums.TypographyVariant
 import materialui.components.typography.typography
-import materialui.styles.childWithStyles
 import react.RBuilder
 import react.RComponent
 import react.dom.div
-import react.dom.p
 import react.rFunction
 import react.setState
 import shared.clients.client
-import shared.components.avatar
 import shared.components.reachrouter.RoutingProps
 import styled.styledDiv
-import styles.taskStyle
 
 fun RBuilder.koansTask(section: Section) {
     Section {
@@ -37,6 +33,7 @@ fun RBuilder.koansTask(section: Section) {
 
 private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
     override fun KoansTaskState.init() {
+        index = 0
         message = null
         outputDetail = null
         code = ""
@@ -78,10 +75,9 @@ private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
         }
     }
 
-    private fun RBuilder.root(render: RBuilder.() -> Unit)
-            = (childWithStyles<TaskDescriptionProps>("Description", taskStyle) { props ->
-                div(props.rootStyle) { props.children() }
-            }) { render() }
+    private fun onChangeIndex(i: Int) {
+        setState { index = i }
+    }
 
     override fun RBuilder.render() {
         child<PlaygroundProps, Playground> {
@@ -90,55 +86,37 @@ private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
             attrs.onChange = this@KoansTask::onChangeCode
         }
 
-        root {
-            typography(p = true) {
-                attrs.variant = TypographyVariant.h6
+        val (avatarSrc, conversation) = conversations()
 
-                +"全てはここから、「Hello, World!」"
-            }
-
-            avatar()
+        child<TaskDescriptionProps, TaskDescription> {
+            attrs.onChangeIndex = this@KoansTask::onChangeIndex
+            attrs.subtitle = "全てはここから、「Hello, World!」"
+            attrs.description = "ほげほげ"
+            attrs.avatarSrc = avatarSrc
+            attrs.conversation = conversation
         }
     }
 
-    private fun RBuilder.avatar() {
+    private fun conversations(): Pair<String, String> {
         if (state.message == Message.output) {
-            when (state.outputDetail) {
-                "Hello, World!\n" -> avatar("/kotori/success_1.png") {
-                    p { +"できました！最初の課題、クリアしましたよ！プロデューサーさん！" }
-                }
-                else -> avatar("/kotori/failed_1.png") {
-                    p { +"惜しい…！後は表示させる言葉を直すだけですね。" }
-                }
+            return when (state.outputDetail) {
+                "Hello, World!\n" -> "/kotori/success_1.png" to "できました！最初の課題、クリアしましたよ！プロデューサーさん！"
+                else -> "/kotori/failed_1.png" to "惜しい…！後は表示させる言葉を直すだけですね。"
             }
-
-            return
         }
 
         if (state.message == Message.error) {
-            avatar("/kotori/failed_2.png") {
-                p { +"動きません…。書き方を間違えちゃったみたいですね…。" }
-            }
-
-            return
+            return "/kotori/failed_2.png" to "動きません…。書き方を間違えちゃったみたいですね…。"
         }
 
         if (state.isInput) {
-            when {
-                state.code.contains("TODO") -> avatar("/kotori/motivated_1.png") {
-                    p { +"『TODO()』って書いてあるところを直すんですね、やってみます！" }
-                }
-                else -> avatar("/kotori/motivated_1.png") {
-                    p { +"えっと、ここをこうして…" }
-                }
+            return when {
+                state.code.contains("TODO") -> "/kotori/motivated_1.png" to "『TODO()』って書いてあるところを直すんですね、やってみます！"
+                else -> "/kotori/motivated_1.png" to "えっと、ここをこうして…"
             }
-
-            return
         }
 
-        avatar("/kotori/normal.png") {
-            p { +"最初の課題は、「『Hello, World!』を画面に表示させよう！」ですか…。何事もまずは挨拶から、ってことかしら…？" }
-        }
+        return "/kotori/normal.png" to "最初の課題は、「『Hello, World!』を画面に表示させよう！」ですか…。何事もまずは挨拶から、ってことかしら…？"
     }
 }
 

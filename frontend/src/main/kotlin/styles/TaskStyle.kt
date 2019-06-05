@@ -1,8 +1,6 @@
 package styles
 
-import kotlinx.css.Color
-import kotlinx.css.padding
-import kotlinx.css.px
+import kotlinx.css.*
 import materialui.styles.StylesSet
 
 val taskStyle: StylesSet.() -> Unit = {
@@ -12,5 +10,10 @@ val taskStyle: StylesSet.() -> Unit = {
         maxWidth = 600.px
         padding(24.px)
         backgroundColor = Color("#FFF")
+    }
+
+    "pagination" {
+        display = Display.flex
+        justifyContent = JustifyContent.spaceBetween
     }
 }
