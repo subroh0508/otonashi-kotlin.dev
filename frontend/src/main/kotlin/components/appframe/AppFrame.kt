@@ -1,7 +1,7 @@
 package components.appframe
 
 import components.drawer.koans.koansDrawer
-import components.koans.koans
+import components.koans.koansTask
 import kotlinx.html.id
 import kotlinx.html.js.onClickFunction
 import materialui.components.appbar.appBar
@@ -23,9 +23,9 @@ import react.RComponent
 import react.dom.div
 import react.rFunction
 import react.setState
-import shared.reachrouter.Router
-import shared.reachrouter.RoutingProps
-import shared.reachrouter.navigate
+import shared.components.reachrouter.Router
+import shared.components.reachrouter.RoutingProps
+import shared.components.reachrouter.navigate
 
 class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
     override fun AppFrameState.init() {
@@ -94,10 +94,10 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
             storyView { attrs.path = "story" }
             learningView { attrs.path = "learn" }
             koansDrawer { sections ->
-                attrs.path = "koans"
+                attrs.path = "koansTask"
                 attrs.mobileMenuOpen = state.mobileMenuOpen
 
-                sections.forEach { koans(it) }
+                sections.forEach { koansTask(it) }
             }
         }
     }
@@ -115,7 +115,7 @@ val learningView = rFunction<RoutingProps>("Learn") {
     div { typography { attrs.variant = TypographyVariant.h1; +"Learn" } }
 }
 
-val koansView = rFunction<RoutingProps>("koans") {
+val koansView = rFunction<RoutingProps>("koansTask") {
     div { typography { attrs.variant = TypographyVariant.h1; +"Koans" } }
 }
 

@@ -31,8 +31,8 @@ val learn: Navigation = jsObject {
 }
 
 val koans: Navigation = jsObject {
-    id = "koans"
+    id = "koansTask"
     displayName = "学習: 実践編"
-    pathname = "koans"
+    pathname = "koansTask"
     hasDrawer = true
 }

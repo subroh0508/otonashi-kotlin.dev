@@ -1,4 +1,4 @@
-package shared.kotlinplayground
+package shared.components.kotlinplayground
 
 import kotlinext.js.jsObject
 import kotlinx.html.AttributeEnum

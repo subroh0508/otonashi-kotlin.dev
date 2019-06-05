@@ -1,4 +1,4 @@
-package shared
+package shared.clients
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.js.Js

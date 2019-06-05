@@ -1,4 +1,4 @@
-package shared
+package shared.components
 
 import materialui.styles.childWithStyles
 import react.RBuilder

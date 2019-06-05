@@ -1,4 +1,4 @@
-package shared.reachrouter
+package shared.components.reachrouter
 
 import kotlinext.js.jsObject
 import react.RBuilder

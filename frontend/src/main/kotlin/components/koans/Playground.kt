@@ -10,9 +10,9 @@ import react.RBuilder
 import react.RComponent
 import react.RState
 import react.dom.div
-import shared.kotlinplayground.Platform
-import shared.kotlinplayground.createPlayground
-import shared.kotlinplayground.kotlinCode
+import shared.components.kotlinplayground.Platform
+import shared.components.kotlinplayground.createPlayground
+import shared.components.kotlinplayground.kotlinCode
 import styles.playgroundStyle
 import kotlin.browser.window
 

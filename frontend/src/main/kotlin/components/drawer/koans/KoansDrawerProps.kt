@@ -1,7 +1,7 @@
 package components.drawer.koans
 
 import org.w3c.dom.events.Event
-import shared.reachrouter.RoutingProps
+import shared.components.reachrouter.RoutingProps
 
 external interface KoansDrawerProps : RoutingProps {
     var mobileMenuOpen: Boolean

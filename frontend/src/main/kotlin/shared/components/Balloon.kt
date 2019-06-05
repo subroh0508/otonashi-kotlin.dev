@@ -1,4 +1,4 @@
-package shared
+package shared.components
 
 import kotlinx.css.Display
 import kotlinx.css.TextAlign

@@ -1,5 +1,6 @@
 package components.koans
 
+import components.koans.sections.Section
 import io.ktor.client.request.get
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,14 +12,31 @@ import react.RBuilder
 import react.RComponent
 import react.dom.div
 import react.dom.p
+import react.rFunction
 import react.setState
-import shared.avatar
-import shared.client
+import shared.clients.client
+import shared.components.avatar
+import shared.components.reachrouter.RoutingProps
 import styled.styledDiv
 import styles.taskStyle
 
-class TaskComponent : RComponent<TaskComponentProps, TaskComponentState>() {
-    override fun TaskComponentState.init() {
+fun RBuilder.koansTask(section: Section) {
+    Section {
+        attrs.path = section.pathname
+
+        section.tasks.forEach { task ->
+            KoansTaskContainer {
+                attrs.path = task.pathname
+                attrs.taskPath = "sections/${section.pathname}/${task.pathname}"
+            }
+        }
+
+        Default { attrs.default = true }
+    }
+}
+
+private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
+    override fun KoansTaskState.init() {
         message = null
         outputDetail = null
         code = ""
@@ -26,12 +44,23 @@ class TaskComponent : RComponent<TaskComponentProps, TaskComponentState>() {
         isInput = false
     }
 
-    override fun componentDidMount() {
-        GlobalScope.launch {
-            val code = client.get<String>("http://localhost:8088/sections/" + props.taskPath)
+    private val taskPath: String
+        get() = "http://localhost:8088/${props.taskPath}.kt"
 
-            setState { initialCode = code }
+    override fun componentDidMount() {
+        GlobalScope.launch { fetchCode() }
+    }
+
+    override fun componentDidUpdate(prevProps: KoansTaskProps, prevState: KoansTaskState, snapshot: Any) {
+        if (prevProps.taskPath != props.taskPath) {
+            GlobalScope.launch { fetchCode() }
         }
+    }
+
+    private suspend fun fetchCode() {
+        val code = client.get<String>(taskPath)
+
+        setState { initialCode = code }
     }
 
     private fun onReceivedMessage(message: Message, output: String?) {
@@ -49,33 +78,26 @@ class TaskComponent : RComponent<TaskComponentProps, TaskComponentState>() {
         }
     }
 
-    private fun RBuilder.root(render: RBuilder.(TaskComponentProps) -> Unit)
-            = (childWithStyles<TaskComponentProps>("TaskComponent", taskStyle) { props ->
-                div(props.rootStyle) { render(props) }
-            }) { }
+    private fun RBuilder.root(render: RBuilder.() -> Unit)
+            = (childWithStyles<TaskDescriptionProps>("Description", taskStyle) { props ->
+                div(props.rootStyle) { props.children() }
+            }) { render() }
 
     override fun RBuilder.render() {
-        styledDiv {
-            css.display = Display.flex
-            css.height = 100.vh
-            css.width = 100.vw - 240.px
-            css.position = Position.fixed
+        child<PlaygroundProps, Playground> {
+            attrs.initialCode = state.initialCode
+            attrs.onReceivedMessage = this@KoansTask::onReceivedMessage
+            attrs.onChange = this@KoansTask::onChangeCode
+        }
 
-            child<PlaygroundProps, Playground> {
-                attrs.initialCode = state.initialCode
-                attrs.onReceivedMessage = this@TaskComponent::onReceivedMessage
-                attrs.onChange = { onChangeCode(it) }
+        root {
+            typography(p = true) {
+                attrs.variant = TypographyVariant.h6
+
+                +"全てはここから、「Hello, World!」"
             }
 
-            root {
-                typography(p = true) {
-                    attrs.variant = TypographyVariant.h6
-
-                    +"全てはここから、「Hello, World!」"
-                }
-
-                avatar()
-            }
+            avatar()
         }
     }
 
@@ -118,4 +140,25 @@ class TaskComponent : RComponent<TaskComponentProps, TaskComponentState>() {
             p { +"最初の課題は、「『Hello, World!』を画面に表示させよう！」ですか…。何事もまずは挨拶から、ってことかしら…？" }
         }
     }
+}
+
+private val KoansTaskContainer = rFunction<KoansTaskProps>("KoansTaskContainer") { props ->
+    styledDiv {
+        css.display = Display.flex
+        css.height = 100.vh
+        css.width = 100.vw - 240.px
+        css.position = Position.fixed
+
+        child(KoansTask::class) {
+            attrs.taskPath = props.taskPath
+        }
+    }
+}
+
+private val Section = rFunction<RoutingProps>("Section") {
+    it.children()
+}
+
+private val Default = rFunction<RoutingProps>("default") {
+    div { typography { attrs.variant = TypographyVariant.h1; +"Default" } }
 }
