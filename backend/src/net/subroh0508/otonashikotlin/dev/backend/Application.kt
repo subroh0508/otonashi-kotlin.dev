@@ -18,6 +18,7 @@ import io.ktor.locations.get
 import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import net.subroh0508.otonashikotlin.dev.backend.appservices.CodingConversationService
 import net.subroh0508.otonashikotlin.dev.backend.appservices.TaskResultService
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -55,10 +56,20 @@ fun Application.module(testing: Boolean = false) {
                 call.respond(HttpStatusCode.OK, result)
             }
 
-            @Location("/{section}/{task}/coding_conversations")
-            data class CodingConversationsParams(val section: String, val task: String, val code: String)
-            get<CodingConversationsParams> { params ->
+            @Location("/{section}/{task}/start_conversations")
+            data class StartConversationsParams(val section: String, val task: String)
+            get<StartConversationsParams> { params ->
+                val conversation = CodingConversationService.build(params.section, params.task, null)
 
+                call.respond(HttpStatusCode.OK, conversation)
+            }
+
+            @Location("/{section}/{task}/coding_conversations")
+            data class CodingConversationsParams(val section: String, val task: String, val code: String?)
+            get<CodingConversationsParams> { params ->
+                val conversation = CodingConversationService.build(params.section, params.task, params.code)
+
+                call.respond(HttpStatusCode.OK, conversation)
             }
         }
     }
