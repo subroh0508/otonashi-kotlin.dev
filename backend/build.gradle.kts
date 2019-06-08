@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     application
     kotlin("jvm")
@@ -25,8 +27,19 @@ repositories {
 
 dependencies {
     compile(Dep.KotlinJvm.stdlib)
-    compile(Dep.Ktor.serverNetty)
-    compile(Dep.logbook)
     compile(Dep.Ktor.serverCore)
+    compile(Dep.Ktor.serverNetty)
+    compile(Dep.Ktor.gson)
+    compile(Dep.Ktor.locations)
+    compile(Dep.logbook)
     testCompile(Dep.Ktor.serverTest)
+}
+
+val compileKotlin by tasks.getting(KotlinCompile::class) {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = listOf(
+            "-Xuse-experimental=kotlin.Experimental"
+        )
+    }
 }

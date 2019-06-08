@@ -23,6 +23,8 @@ object Dep {
     object Ktor {
         const val serverCore = "io.ktor:ktor-server-core:${Versions.ktor}"
         const val serverNetty = "io.ktor:ktor-server-netty:${Versions.ktor}"
+        const val locations = "io.ktor:ktor-locations:${Versions.ktor}"
+        const val gson = "io.ktor:ktor-gson:${Versions.ktor}"
         const val clientLogging = "io.ktor:ktor-client-logging-jvm:${Versions.ktor}"
         const val jsonCommon = "io.ktor:ktor-client-json:${Versions.ktor}"
         const val jsonJvm = "io.ktor:ktor-client-json-jvm:${Versions.ktor}"
