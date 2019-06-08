@@ -52,12 +52,25 @@ fun RBuilder.taskDescriptionBody(handler: RHandler<TaskDescriptionBodyProps>) = 
 
 private class TaskDescriptionBody : RComponent<TaskDescriptionBodyProps, TaskDescriptionBodyState>() {
     override fun TaskDescriptionBodyState.init(props: TaskDescriptionBodyProps) {
-        index = if (props == undefined) 0 else props.index
+        index = if (props.index == undefined) 0 else props.index
+    }
+
+    override fun componentDidUpdate(
+        prevProps: TaskDescriptionBodyProps,
+        prevState: TaskDescriptionBodyState,
+        snapshot: Any
+    ) {
+        if (props.index == undefined || props.index == state.index) {
+            return
+        }
+
+        setState { index = props.index }
     }
 
     override fun RBuilder.render() {
         SwipeableViews {
-            attrs.index = props.index
+            attrs.index = state.index
+            attrs.disabled = true
 
             typography(p = true) {
                 +(props.description)
