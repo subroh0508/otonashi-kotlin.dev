@@ -6,5 +6,6 @@ object Versions {
     const val kotlinReact = "16.6.0-pre.71-kotlin-1.3.31"
     const val kotlinJsWrappers = "1.0.0-pre.71-kotlin-1.3.31"
     const val kotlinMaterialUi = "0.1.14"
-    const val ktor = "1.2.0"
+    const val ktor = "1.2.1"
+    const val logback = "1.2.1"
 }

@@ -1,6 +1,6 @@
 rootProject.name = "otonashikotlin.dev"
 
-include("frontend")
+include("frontend", "backend")
 
 pluginManagement {
     repositories {
@@ -11,8 +11,9 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
-                "kotlin2js", "kotlin-dce-js" -> useModule(Dep.Plugin.kotlinGradle)
+                "kotlin2js", "kotlin-dce-js", "org.jetbrains.kotlin.jvm" -> useModule(Dep.Plugin.kotlinGradle)
                 "org.jetbrains.kotlin.frontend" -> useModule(Dep.Plugin.kotlinFrontend)
+                "kotlinx-serialization" -> useModule(Dep.Plugin.kotlinxSerialization)
             }
         }
     }
