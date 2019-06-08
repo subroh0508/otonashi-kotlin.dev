@@ -54,7 +54,7 @@ sealed class IntroductionTask {
                 return CodingConversation(INIT_MESSAGE, INIT_SRC)
             }
 
-            val mainScope = codeRegex.find(code)?.value ?: return CodingConversation(
+            val mainScope = codeRegex.find(code)?.value?.trim()?.takeIf(String::isNotBlank) ?: return CodingConversation(
                 HINT_USE_PRINT_MESSAGES, HINT_USE_PRINT_SRC
             )
 

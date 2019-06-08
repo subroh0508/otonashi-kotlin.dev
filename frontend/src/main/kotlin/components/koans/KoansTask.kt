@@ -23,7 +23,7 @@ fun RBuilder.koansTask(section: Section) {
         section.tasks.forEach { task ->
             KoansTaskContainer {
                 attrs.path = task.pathname
-                attrs.taskPath = "sections/${section.pathname}/${task.pathname}"
+                attrs.taskPath = "${section.pathname}/${task.pathname}"
             }
         }
 
@@ -34,18 +34,17 @@ fun RBuilder.koansTask(section: Section) {
 private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
     override fun KoansTaskState.init() {
         index = 0
-        message = null
-        outputDetail = null
-        code = ""
         initialCode = ""
-        isInput = false
+        avatarSrc = ""
+        ok = false
     }
 
     private val taskPath: String
-        get() = "http://localhost:8088/${props.taskPath}.kt"
+        get() = "http://localhost:8088/sections/${props.taskPath}.kt"
 
     override fun componentDidMount() {
         GlobalScope.launch { fetchCode() }
+        GlobalScope.launch { startConversations() }
     }
 
     override fun componentDidUpdate(prevProps: KoansTaskProps, prevState: KoansTaskState, snapshot: Any) {
@@ -60,19 +59,45 @@ private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
         setState { initialCode = code }
     }
 
-    private fun onReceivedMessage(message: Message, output: String?) {
+    private suspend fun startConversations() {
+        val startConversationPath = "http://localhost:8080/api/v1/${props.taskPath}/start_conversations"
+        val conversation: Conversation = JSON.parse(client.get(startConversationPath))
+
         setState {
-            this.message = message
-            outputDetail = output
-            isInput = false
+            this.conversation = conversation.message
+            avatarSrc = conversation.avatar
         }
     }
 
-    private fun onChangeCode(code: String) {
+    private suspend fun codingConversations(code: String) {
+        if (state.ok || state.index == 0) return
+
+        val codingConversationPath = "http://localhost:8080/api/v1/${props.taskPath}/coding_conversations?code=$code"
+        val conversation: Conversation = JSON.parse(client.get(codingConversationPath))
+
         setState {
-            isInput = this.code.isNotBlank()
-            this.code = code
+            this.conversation = conversation.message
+            avatarSrc = conversation.avatar
         }
+    }
+
+    private suspend fun validateTaskResult(message: Message, outputDetail: String?) {
+        val taskResultPath = "http://localhost:8080/api/v1/${props.taskPath}/task_results?output=$outputDetail&status=$message"
+        val taskResult: TaskResult = JSON.parse(client.get(taskResultPath))
+
+        setState {
+            this.ok = taskResult.status == "SUCCESS"
+            this.conversation = taskResult.message
+            avatarSrc = taskResult.avatar
+        }
+    }
+
+    private fun onReceivedMessage(message: Message, output: String?) {
+        GlobalScope.launch { validateTaskResult(message, output) }
+    }
+
+    private fun onChangeCode(code: String) {
+        GlobalScope.launch { codingConversations(code) }
     }
 
     private fun onChangeIndex(i: Int) {
@@ -86,8 +111,6 @@ private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
             attrs.onChange = this@KoansTask::onChangeCode
         }
 
-        val (avatarSrc, conversation) = conversations()
-
         taskDescription {
             taskDescriptionHeader {
                 attrs.index = state.index
@@ -98,32 +121,10 @@ private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
             taskDescriptionBody {
                 attrs.index = state.index
                 attrs.description = "ほげほげ"
-                attrs.avatarSrc = avatarSrc
-                attrs.conversation = conversation
+                attrs.avatarSrc = state.avatarSrc
+                attrs.conversation = state.conversation
             }
         }
-    }
-
-    private fun conversations(): Pair<String, String> {
-        if (state.message == Message.output) {
-            return when (state.outputDetail) {
-                "Hello, World!\n" -> "/kotori/success_1.png" to "できました！最初の課題、クリアしましたよ！プロデューサーさん！"
-                else -> "/kotori/failed_1.png" to "惜しい…！後は表示させる言葉を直すだけですね。"
-            }
-        }
-
-        if (state.message == Message.error) {
-            return "/kotori/failed_2.png" to "動きません…。書き方を間違えちゃったみたいですね…。"
-        }
-
-        if (state.isInput) {
-            return when {
-                state.code.contains("TODO") -> "/kotori/motivated_1.png" to "『TODO()』って書いてあるところを直すんですね、やってみます！"
-                else -> "/kotori/motivated_1.png" to "えっと、ここをこうして…"
-            }
-        }
-
-        return "/kotori/normal.png" to "最初の課題は、「『Hello, World!』を画面に表示させよう！」ですか…。何事もまずは挨拶から、ってことかしら…？"
     }
 }
 
@@ -146,4 +147,15 @@ private val Section = rFunction<RoutingProps>("Section") {
 
 private val Default = rFunction<RoutingProps>("default") {
     div { typography { attrs.variant = TypographyVariant.h1; +"Default" } }
+}
+
+external class Conversation {
+    val message: String
+    val avatar: String
+}
+
+external class TaskResult {
+    val status: String
+    val message: String
+    val avatar: String
 }
