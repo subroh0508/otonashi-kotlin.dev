@@ -11,7 +11,9 @@ val taskStyle: StylesSet.() -> Unit = {
         padding(24.px)
         backgroundColor = Color("#FFF")
     }
+}
 
+val taskHeaderStyle: StylesSet.() -> Unit = {
     "pagination" {
         display = Display.flex
         justifyContent = JustifyContent.spaceBetween

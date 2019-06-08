@@ -9,4 +9,6 @@ external interface KoansTaskState : RState {
     var initialCode: String
     var isInput: Boolean
     var index: Int
+    var avatarSrc: String
+    var conversation: String
 }

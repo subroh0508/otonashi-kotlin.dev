@@ -88,12 +88,19 @@ private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
 
         val (avatarSrc, conversation) = conversations()
 
-        child<TaskDescriptionProps, TaskDescription> {
-            attrs.onChangeIndex = this@KoansTask::onChangeIndex
-            attrs.subtitle = "全てはここから、「Hello, World!」"
-            attrs.description = "ほげほげ"
-            attrs.avatarSrc = avatarSrc
-            attrs.conversation = conversation
+        taskDescription {
+            taskDescriptionHeader {
+                attrs.index = state.index
+                attrs.onChangeIndex = this@KoansTask::onChangeIndex
+                attrs.subtitle = "全てはここから、「Hello, World!」"
+            }
+
+            taskDescriptionBody {
+                attrs.index = state.index
+                attrs.description = "ほげほげ"
+                attrs.avatarSrc = avatarSrc
+                attrs.conversation = conversation
+            }
         }
     }
 

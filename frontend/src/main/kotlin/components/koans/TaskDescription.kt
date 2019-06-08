@@ -1,5 +1,8 @@
 package components.koans
 
+import kotlinx.css.Color
+import kotlinx.css.padding
+import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
 import materialui.components.icon.enums.IconColor
 import materialui.components.icon.icon
@@ -7,70 +10,70 @@ import materialui.components.iconbutton.iconButton
 import materialui.components.typography.enums.TypographyVariant
 import materialui.components.typography.typography
 import materialui.styles.childWithStyles
-import react.RBuilder
-import react.RComponent
+import react.*
 import react.dom.WithClassName
 import react.dom.div
 import react.dom.p
-import react.rFunction
-import react.setState
 import shared.components.avatar
 import shared.components.reactswipeableviews.SwipeableViews
-import styles.taskStyle
+import styled.styledDiv
+import styles.taskHeaderStyle
 
-val RBuilder.taskDescription
-    get() = (childWithStyles<TaskDescriptionProps>("Description", taskStyle) { props ->
-        div(props.rootStyle) {
-            node(TaskDescription::class, props)
+fun RBuilder.taskDescription(render: RBuilder.() -> Unit) {
+    styledDiv {
+        css.flexGrow = 0.6
+        css.minWidth = 450.px
+        css.maxWidth = 600.px
+        css.padding(24.px)
+        css.backgroundColor = Color("#FFF")
+
+        render()
+    }
+}
+
+val RBuilder.taskDescriptionHeader
+    get() = childWithStyles<TaskDescriptionHeaderProps>(
+        "DescriptionHeader", taskHeaderStyle
+    ) { props ->
+        typography(p = true) {
+            attrs.variant = TypographyVariant.h6
+
+            +(props.subtitle)
         }
-    })
 
-class TaskDescription : RComponent<TaskDescriptionProps, TaskDescriptionState>() {
-    override fun TaskDescriptionState.init() {
-        index = 0
+        Pagination {
+            attrs.className = props.paginationStyle
+            attrs.index = props.index
+            attrs.onChangeIndex = props.onChangeIndex
+        }
     }
 
-    private fun onChangeIndex(i: Int) {
-        props.onChangeIndex(i)
+fun RBuilder.taskDescriptionBody(handler: RHandler<TaskDescriptionBodyProps>) = child(TaskDescriptionBody::class, handler)
 
-        console.log(i)
-        setState { index = i }
+private class TaskDescriptionBody : RComponent<TaskDescriptionBodyProps, TaskDescriptionBodyState>() {
+    override fun TaskDescriptionBodyState.init(props: TaskDescriptionBodyProps) {
+        index = if (props == undefined) 0 else props.index
     }
-
-    private fun RBuilder.root(render: RBuilder.(TaskDescriptionProps) -> Unit)
-            = (childWithStyles<TaskDescriptionProps>("Description", taskStyle) { props ->
-                div(props.rootStyle) { render(props) }
-            }).node(props)
 
     override fun RBuilder.render() {
-        root { props ->
+        SwipeableViews {
+            attrs.index = props.index
+
             typography(p = true) {
-                attrs.variant = TypographyVariant.h6
-
-                +(props.subtitle)
+                +(props.description)
             }
 
-            Pagination {
-                attrs.className = props.paginationStyle
-                attrs.index = state.index
-                attrs.onChangeIndex = this@TaskDescription::onChangeIndex
-            }
-
-            SwipeableViews {
-                attrs.index = state.index
-
-                typography(p = true) {
-                    +(props.description)
-                }
-
-                div {
-                    avatar(props.avatarSrc) {
-                        p { +(props.conversation) }
-                    }
+            div {
+                avatar(props.avatarSrc) {
+                    p { +(props.conversation) }
                 }
             }
         }
     }
+}
+
+private external interface TaskDescriptionBodyState : RState {
+    var index: Int
 }
 
 private external interface PaginationProps : WithClassName {
