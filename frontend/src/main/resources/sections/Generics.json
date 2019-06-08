@@ -4,7 +4,9 @@
   "tasks": [
     {
       "displayName": "ジェネリック関数",
-      "pathname": "Generic%20functions"
+      "pathname": "Generic%20functions",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     }
   ]
 }

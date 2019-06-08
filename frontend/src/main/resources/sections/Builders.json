@@ -4,19 +4,27 @@
   "tasks": [
     {
       "displayName": "レシーバー付き関数リテラル",
-      "pathname": "Function%20literals%20with%20receiver"
+      "pathname": "Function%20literals%20with%20receiver",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "マップビルダー",
-      "pathname": "String%20and%20map%20builders"
+      "pathname": "String%20and%20map%20builders",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "関数リテラルの実行",
-      "pathname": "The%20function%20apply"
+      "pathname": "The%20function%20apply",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "ビルダーの使い方",
-      "pathname": "Builders%20how%20it%20works"
+      "pathname": "Builders%20how%20it%20works",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     }
   ]
 }

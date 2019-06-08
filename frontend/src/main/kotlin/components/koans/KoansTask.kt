@@ -24,6 +24,8 @@ fun RBuilder.koansTask(section: Section) {
             KoansTaskContainer {
                 attrs.path = task.pathname
                 attrs.taskPath = "${section.pathname}/${task.pathname}"
+                attrs.subtitle = task.subtitle
+                attrs.description = task.description
             }
         }
 
@@ -115,12 +117,12 @@ private class KoansTask : RComponent<KoansTaskProps, KoansTaskState>() {
             taskDescriptionHeader {
                 attrs.index = state.index
                 attrs.onChangeIndex = this@KoansTask::onChangeIndex
-                attrs.subtitle = "全てはここから、「Hello, World!」"
+                attrs.subtitle = props.subtitle
             }
 
             taskDescriptionBody {
                 attrs.index = state.index
-                attrs.description = "ほげほげ"
+                attrs.description = props.description
                 attrs.avatarSrc = state.avatarSrc
                 attrs.conversation = state.conversation
             }
@@ -137,6 +139,8 @@ private val KoansTaskContainer = rFunction<KoansTaskProps>("KoansTaskContainer")
 
         child(KoansTask::class) {
             attrs.taskPath = props.taskPath
+            attrs.subtitle = props.subtitle
+            attrs.description = props.description
         }
     }
 }

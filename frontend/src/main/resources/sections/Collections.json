@@ -4,51 +4,75 @@
   "tasks": [
     {
       "displayName": "セット・リスト・マップ",
-      "pathname": "Introduction"
+      "pathname": "Introduction",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "絞り込む",
-      "pathname": "Filter%20map"
+      "pathname": "Filter%20map",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "探す、数える",
-      "pathname": "All%20Any%20and%20other%20predicates"
+      "pathname": "All%20Any%20and%20other%20predicates",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "変換",
-      "pathname": "FlatMap"
+      "pathname": "FlatMap",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "最大、最小",
-      "pathname": "Max%20min"
+      "pathname": "Max%20min",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "並び替え",
-      "pathname": "Sort"
+      "pathname": "Sort",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "合計",
-      "pathname": "Sum"
+      "pathname": "Sum",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "グループわけ",
-      "pathname": "GroupBy"
+      "pathname": "GroupBy",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "分割",
-      "pathname": "Partition"
+      "pathname": "Partition",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "畳み込み",
-      "pathname": "Fold"
+      "pathname": "Fold",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "合わせ技",
-      "pathname": "Compound%20tasks"
+      "pathname": "Compound%20tasks",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "Javaのリファクタ",
-      "pathname": "Get%20used%20to%20new%20style"
+      "pathname": "Get%20used%20to%20new%20style",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     }
   ]
 }

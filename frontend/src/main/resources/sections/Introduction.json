@@ -4,51 +4,75 @@
   "tasks": [
     {
       "displayName": "Hello, World!",
-      "pathname": "HelloWorld"
+      "pathname": "HelloWorld",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "よし！ まず手始めに、全てのプログラミング言語の最初の1歩、『Hello, World!』の表示からやりましょう！\n左の画面にコードを書いて、問題なさそうと思ったら緑の実行ボタンを押しましょう。\nすぐに結果が分かりますよ！"
     },
     {
       "displayName": "引数(名前付き)",
-      "pathname": "NamedArguments"
+      "pathname": "NamedArguments",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "引数(デフォルト値)",
-      "pathname": "DefaultArguments"
+      "pathname": "DefaultArguments",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "ラムダ式",
-      "pathname": "Lambdas"
+      "pathname": "Lambdas",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "文字列",
-      "pathname": "Strings"
+      "pathname": "Strings",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "データクラス",
-      "pathname": "DataClasses"
+      "pathname": "DataClasses",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "NULL許可",
-      "pathname": "NullableTypes"
+      "pathname": "NullableTypes",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "スマートキャスト",
-      "pathname": "SmartCasts"
+      "pathname": "SmartCasts",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "拡張関数",
-      "pathname": "ExtensionFunctions"
+      "pathname": "ExtensionFunctions",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "無名オブジェクト",
-      "pathname": "ObjectExpressions"
+      "pathname": "ObjectExpressions",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "SAM変換",
-      "pathname": "SAMConversions"
+      "pathname": "SAMConversions",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "リスト操作",
-      "pathname": "ExtensionsOnCollections"
+      "pathname": "ExtensionsOnCollections",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     }
   ]
 }

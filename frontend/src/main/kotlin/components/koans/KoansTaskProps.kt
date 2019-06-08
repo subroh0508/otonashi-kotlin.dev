@@ -4,6 +4,8 @@ import shared.components.reachrouter.RoutingProps
 
 external interface KoansTaskProps : RoutingProps {
     var taskPath: String
+    var subtitle: String
+    var description: String
 }
 
 val KoansTaskProps.rootStyle: String

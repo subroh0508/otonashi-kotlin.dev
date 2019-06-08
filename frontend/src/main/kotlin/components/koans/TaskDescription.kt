@@ -73,7 +73,9 @@ private class TaskDescriptionBody : RComponent<TaskDescriptionBodyProps, TaskDes
             attrs.disabled = true
 
             typography(p = true) {
-                +(props.description)
+                props.description.split("\n").forEach {
+                    p { +it }
+                }
             }
 
             div {

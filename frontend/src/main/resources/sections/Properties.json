@@ -4,19 +4,27 @@
   "tasks": [
     {
       "displayName": "プロパティ",
-      "pathname": "Properties"
+      "pathname": "Properties",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "遅延読み込み",
-      "pathname": "Lazy%20property"
+      "pathname": "Lazy%20property",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "委譲プロパティ(基礎)",
-      "pathname": "Delegates%20examples"
+      "pathname": "Delegates%20examples",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "委譲プロパティ(実践)",
-      "pathname": "Delegates%20how%20it%20works"
+      "pathname": "Delegates%20how%20it%20works",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     }
   ]
 }

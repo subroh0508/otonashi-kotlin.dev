@@ -4,31 +4,45 @@
   "tasks": [
     {
       "displayName": "比較",
-      "pathname": "Comparison"
+      "pathname": "Comparison",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "範囲(in演算子)",
-      "pathname": "In%20range"
+      "pathname": "In%20range",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "範囲(rangeToメソッド)",
-      "pathname": "Range%20to"
+      "pathname": "Range%20to",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "範囲(forループ)",
-      "pathname": "For%20loop"
+      "pathname": "For%20loop",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "演算子オーバーロード",
-      "pathname": "Operators%20overloading"
+      "pathname": "Operators%20overloading",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "分解宣言",
-      "pathname": "Destructuring%20declarations"
+      "pathname": "Destructuring%20declarations",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     },
     {
       "displayName": "invokeメソッド",
-      "pathname": "Invoke"
+      "pathname": "Invoke",
+      "subtitle": "全てはここから、「Hello, World!」",
+      "description": "ほげほげ"
     }
   ]
 }
