@@ -7,23 +7,30 @@ import materialui.components.dialog.dialog
 import materialui.components.dialog.enums.DialogMaxWidth
 import materialui.components.dialogactions.dialogActions
 import materialui.components.dialogcontent.dialogContent
-import materialui.components.dialogcontenttext.dialogContentText
+import materialui.styles.childWithStyles
 import react.*
 import react.dom.a
 import react.dom.li
 import react.dom.ul
 import shared.components.reachrouter.RoutingProps
+import shared.components.revealjs.RevealJsComponent
+import styles.storyStyle
+
+external interface StoryProps: RoutingProps
+
+val StoryProps.contentStyle: String
+    get() = asDynamic()["classes"]["content"] as String
 
 external interface StoryState : RState {
     var openModal: Boolean
 }
 
-val storyView: RClass<RoutingProps>
-        get() = rFunction("StoryView") {
-            child(Story::class) {}
-        }
+val RBuilder.storyView: RClass<StoryProps>
+    get() = this.childWithStyles("StoryView", storyStyle) { props ->
+        child(Story::class.js as RClass<StoryProps>, props) {}
+    }
 
-class Story : RComponent<RProps, StoryState>() {
+class Story : RComponent<StoryProps, StoryState>() {
     override fun StoryState.init() {
         openModal = false
     }
@@ -52,10 +59,8 @@ class Story : RComponent<RProps, StoryState>() {
             attrs.open = state.openModal
             attrs.onClose = { _, _ -> closeModal() }
 
-            dialogContent {
-                dialogContentText(null) {
-                    +"テストテスト"
-                }
+            dialogContent(props.contentStyle) {
+                child(RevealJsComponent::class) {}
             }
 
             dialogActions {

@@ -1,3 +1,5 @@
+import kotlinext.js.jsObject
+
 @JsModule("reveal.js")
 private external val Reveal: dynamic = definedExternally
 
@@ -6,5 +8,9 @@ fun main() {
     kotlinext.js.require("reveal.js/css/reveal.css")
     kotlinext.js.require("reveal.js/css/theme/black.css")
 
-    Reveal.initialize()
+    Reveal.initialize(
+        jsObject {
+            asDynamic()["transition"] = "none"
+        }
+    )
 }
