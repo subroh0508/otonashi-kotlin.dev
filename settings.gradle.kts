@@ -1,6 +1,6 @@
 rootProject.name = "otonashikotlin.dev"
 
-include("frontend", "backend")
+include("frontend", "backend", "revealjs")
 
 pluginManagement {
     repositories {
