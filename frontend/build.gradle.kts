@@ -41,6 +41,7 @@ kotlinFrontend {
         dependency("react-markdown")
         dependency("inline-style-prefixer")
         dependency("react-swipeable-views")
+        dependency("reveal.js")
 
         devDependency("css-loader")
         devDependency("style-loader")

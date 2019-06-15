@@ -2,6 +2,7 @@ package components.appframe
 
 import components.drawer.koans.koansDrawer
 import components.koans.koansTask
+import components.story.storyView
 import kotlinx.html.id
 import kotlinx.html.js.onClickFunction
 import materialui.components.appbar.appBar
@@ -97,7 +98,9 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
         }
 
         Router {
-            storyView { attrs.path = "story" }
+            storyView {
+                attrs.path = "story"
+            }
             learningView { attrs.path = "learn" }
             koansDrawer { sections ->
                 attrs.path = koans.pathname
@@ -107,10 +110,6 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
             }
         }
     }
-}
-
-val storyView = rFunction<RoutingProps>("Dashboard") {
-    div { typography { attrs.variant = TypographyVariant.h1; +"Story" } }
 }
 
 val learningView = rFunction<RoutingProps>("Learn") {
