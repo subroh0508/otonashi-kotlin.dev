@@ -86,14 +86,14 @@ private val RBuilder.KoansDrawerImpl get() = childWithStyles<KoansDrawerProps>("
 }
 
 fun RBuilder.renderSections(props: KoansDrawerProps, sections: Array<Section>) {
-    fun collapseIn(pathname: String) = window.location.href.contains("koansTask/$pathname")
-    fun nowTask(section: String, task: String) = window.location.href.contains("koansTask/$section/$task")
+    fun collapseIn(pathname: String) = window.location.href.contains("koans/$pathname")
+    fun nowTask(section: String, task: String) = window.location.href.contains("koans/$section/$task")
 
     list(factory = { NAV(mapOf(), it) }) {
         sections.forEach { section ->
             buttonListItem {
                 attrs.onClickFunction = {
-                    navigate("/koansTask/${section.pathname}")
+                    navigate("/koans/${section.pathname}")
                 }
 
                 listItemText { attrs.primary { +section.displayName } }
@@ -108,7 +108,7 @@ fun RBuilder.renderSections(props: KoansDrawerProps, sections: Array<Section>) {
                 section.tasks.forEach { task ->
                     buttonListItem {
                         attrs.onClickFunction = {
-                            navigate("/koansTask/${section.pathname}/${task.pathname}")
+                            navigate("/koans/${section.pathname}/${task.pathname}")
                         }
 
                         val nowTask = nowTask(section.pathname, task.pathname)

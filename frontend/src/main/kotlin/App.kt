@@ -14,7 +14,6 @@ class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         cssBaseline {  }
         muiThemeProvider(appTheme) {
-            "a" in listOf("b", "b")
             childWithStyles(AppFrame::class, appFrameStyle) {  }
         }
     }

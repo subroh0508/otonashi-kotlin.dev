@@ -26,12 +26,19 @@ import react.setState
 import shared.components.reachrouter.Router
 import shared.components.reachrouter.RoutingProps
 import shared.components.reachrouter.navigate
+import kotlin.browser.window
 
 class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
     override fun AppFrameState.init() {
-        currentPage = home
+        currentPage = initPage()
         mobileMenuOpen = false
     }
+
+    private fun initPage(): Navigation = listOf(story, learn, koans).find { nav ->
+        """^http://localhost:8088/${nav.pathname}.*$""".toRegex().matches(
+            window.location.href
+        )
+    } ?: home
 
     private fun onMenuButtonClick() {
         setState { mobileMenuOpen = !state.mobileMenuOpen && state.currentPage.hasDrawer }
@@ -72,8 +79,8 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
                 }
 
                 div(props.navigationsStyle) {
-                    listOf(home, story, learn, koans).forEach { nav ->
-                        val isCurrentPage = state.currentPage.id == nav.id
+                    listOf(story, learn, koans).forEach { nav ->
+                        val isCurrentPage = state.currentPage.pathname == nav.pathname
 
                         button {
                             attrs.id = nav.id
@@ -90,21 +97,16 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
         }
 
         Router {
-            homeView { attrs.path = "/" }
             storyView { attrs.path = "story" }
             learningView { attrs.path = "learn" }
             koansDrawer { sections ->
-                attrs.path = "koansTask"
+                attrs.path = koans.pathname
                 attrs.mobileMenuOpen = state.mobileMenuOpen
 
                 sections.forEach { koansTask(it) }
             }
         }
     }
-}
-
-val homeView = rFunction<RoutingProps>("Home") {
-    div { typography { attrs.variant = TypographyVariant.h1; +"Home" } }
 }
 
 val storyView = rFunction<RoutingProps>("Dashboard") {
@@ -114,9 +116,3 @@ val storyView = rFunction<RoutingProps>("Dashboard") {
 val learningView = rFunction<RoutingProps>("Learn") {
     div { typography { attrs.variant = TypographyVariant.h1; +"Learn" } }
 }
-
-val koansView = rFunction<RoutingProps>("koansTask") {
-    div { typography { attrs.variant = TypographyVariant.h1; +"Koans" } }
-}
-
-
