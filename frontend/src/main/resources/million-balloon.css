@@ -1,0 +1,89 @@
+.reveal .slides div.balloon-container {
+  height: 720px;
+  width: 1280px;
+  position: relative;
+}
+
+.reveal .slides .million-balloon {
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0 auto 50px;
+  height: 200px;
+  width: 70%;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 24px;
+  line-height: initial;
+  text-align: initial;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.reveal .slides span.character-name:before {
+  width: 15px;
+  height: 53px;
+  margin-right: 20px;
+  top: 15px;
+  content: '';
+  display: inline-block;
+  position: relative;
+  background: linear-gradient(rgba(254,251,154), rgba(179,158,109));
+  -webkit-border-radius: 4px 0 0 0;
+  -moz-border-radius: 4px 0 0 0;
+  border-radius: 4px 0 0 0;
+}
+.reveal .slides span.character-name:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 53px 0 0 32px;
+  border-color: transparent transparent transparent rgba(0,0,0,0.3);;
+  left: 77px;
+  top: 15px;
+  display: inline-block;
+  position: relative;
+}
+
+.reveal .slides span.character-name {
+  background-color: rgba(0,0,0,0.3);
+  color: #fff;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  padding-right: 45px;
+  -webkit-border-radius: 5px 0 0 0;
+  -moz-border-radius: 5px 0 0 0;
+  border-radius: 5px 0 0 0;
+  border-top: solid rgba(210,201,183) 1px;
+  border-left: solid rgba(210,201,183) 1px;
+}
+
+.script {
+  background-color: rgba(0,0,0,0.3);
+  height: 72px;
+  margin-top: 6px;
+  padding: 20px 35px;
+  -webkit-border-radius: 0 5px 5px 5px;
+  -moz-border-radius: 0 5px 5px 5px;
+  border-radius: 0 5px 5px 5px;
+  border-left: solid rgba(210,201,183) 1px;
+  /* box-shadow */
+  -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+}
+
+.reveal .fragment {
+  margin: 0 0 5px;
+  padding: 0;
+  color: #fff;
+  line-height: initial;
+}
+
+.reveal .fragment:after {
+  content: '';
+  height: 5px;
+  width: 100%;
+}

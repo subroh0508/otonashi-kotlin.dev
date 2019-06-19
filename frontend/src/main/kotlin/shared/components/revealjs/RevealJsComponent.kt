@@ -8,19 +8,28 @@ import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.iframe
+import shared.components.millionBalloon
 
 class RevealJsComponent : RComponent<RProps, RState>() {
     override fun componentDidMount() {
         revealBuilder("reveal-frame") {
             section {
-                p { +"小鳥" }
-                p("fragment fade-in") { +"プロデューサーさん！　お疲れ様です！" }
-                p("fragment fade-in") { +"社長がお呼びでしたよ。" }
+                attributes["data-background-image"] = "/background/IMG_1298.PNG"
+                attributes["data-background-size"] = "contain"
+
+                millionBalloon("小鳥") {
+                    p("fragment fade-in script-content") { +"プロデューサーさん！　お疲れ様です！" }
+                    p("fragment fade-in script-content") { +"社長がお呼びでしたよ。" }
+                }
             }
             section {
-                p { +"プロデューサー" }
-                p("fragment fade-in") { +"了解です。" }
-                p("fragment fade-in") { +"(何の話だろうか、心当たりがないな…)" }
+                attributes["data-background-image"] = "/background/IMG_1299.PNG"
+                attributes["data-background-size"] = "contain"
+
+                millionBalloon("にしこりP") {
+                    p("fragment fade-in script-content") { +"了解です。" }
+                    p("fragment fade-in script-content") { +"(何の話だろうか、心当たりがないな…)" }
+                }
             }
             section {
                 +"こんな感じのコミュが書きたい！！！！！！！！"

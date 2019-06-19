@@ -11,6 +11,8 @@ fun main() {
     Reveal.initialize(
         jsObject {
             asDynamic()["transition"] = "none"
+            asDynamic()["width"] = 1280
+            asDynamic()["height"] = 720
         }
     )
 }
