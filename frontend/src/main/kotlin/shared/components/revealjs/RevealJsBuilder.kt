@@ -6,7 +6,6 @@ import kotlinx.css.properties.borderTop
 import kotlinx.css.properties.boxShadow
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
-import styled.toStyle
 import kotlin.browser.document
 
 fun revealBuilder(id: String, block: DIV.() -> Unit) {
@@ -98,8 +97,6 @@ private fun createFrame(block : DIV.() -> Unit = {}): String = createHTML().html
         }
     }
 
-    console.log(css.toString())
-    console.log(css.toStyle())
     head {
         title { +"communication" }
         meta(charset = "utf-8")

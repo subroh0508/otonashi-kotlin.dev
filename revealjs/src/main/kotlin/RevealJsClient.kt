@@ -1,3 +1,4 @@
+
 import kotlinext.js.jsObject
 
 @JsModule("reveal.js")
@@ -13,6 +14,7 @@ fun main() {
             asDynamic()["transition"] = "none"
             asDynamic()["width"] = 1280
             asDynamic()["height"] = 720
+            asDynamic()["postMessageEvents"] = true
         }
     )
 }
