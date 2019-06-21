@@ -4,6 +4,21 @@
   position: relative;
 }
 
+.reveal .slides .takagi {
+  position: absolute;
+  bottom: 236px;
+  left: 190px;
+  height: 150px;
+}
+
+.reveal .slides .takagi > img {
+  border: 0;
+  background: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
 .reveal .slides .million-balloon {
   font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 0 auto 50px;
