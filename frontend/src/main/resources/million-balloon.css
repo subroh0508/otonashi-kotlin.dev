@@ -90,6 +90,10 @@
   box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
 }
 
+.with-empty-character {
+  margin-top: 10px;
+}
+
 .reveal .fragment {
   margin: 0 0 5px;
   padding: 0;

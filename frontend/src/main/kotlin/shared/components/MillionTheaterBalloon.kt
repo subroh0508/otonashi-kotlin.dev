@@ -16,7 +16,7 @@ fun SECTION.millionBalloon(
 
         div("million-balloon") {
             span("character-name") { +name }
-            div("script", block = block)
+            div("script${if (name.isBlank()) " with-empty-character" else ""}", block = block)
         }
     }
 }
