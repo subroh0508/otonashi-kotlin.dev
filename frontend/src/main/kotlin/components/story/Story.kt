@@ -7,11 +7,11 @@ import materialui.components.dialog.dialog
 import materialui.components.dialog.enums.DialogMaxWidth
 import materialui.components.dialogactions.dialogActions
 import materialui.components.dialogcontent.dialogContent
+import materialui.components.icon.icon
+import materialui.components.modal.modal
 import materialui.styles.childWithStyles
 import react.*
-import react.dom.a
-import react.dom.li
-import react.dom.ul
+import react.dom.*
 import shared.components.reachrouter.RoutingProps
 import shared.components.revealjs.RevealJsComponent
 import styles.storyStyle
@@ -21,8 +21,12 @@ external interface StoryProps: RoutingProps
 val StoryProps.contentStyle: String
     get() = asDynamic()["classes"]["content"] as String
 
+val StoryProps.messageBoxStyle: String
+    get() = asDynamic()["classes"]["messageBox"] as String
+
 external interface StoryState : RState {
     var openModal: Boolean
+    var showMillionJewel: Boolean
 }
 
 val RBuilder.storyView: RClass<StoryProps>
@@ -33,6 +37,7 @@ val RBuilder.storyView: RClass<StoryProps>
 class Story : RComponent<StoryProps, StoryState>() {
     override fun StoryState.init() {
         openModal = false
+        showMillionJewel = false
     }
 
     private fun openModal() {
@@ -40,7 +45,7 @@ class Story : RComponent<StoryProps, StoryState>() {
     }
 
     private fun closeModal() {
-        setState { openModal = false }
+        setState { openModal = false; showMillionJewel = true }
     }
 
     override fun RBuilder.render() {
@@ -49,6 +54,47 @@ class Story : RComponent<StoryProps, StoryState>() {
                 a {
                     attrs.onClickFunction = { openModal() }
                     +"開く"
+                }
+            }
+        }
+
+        modal {
+            attrs.open = state.showMillionJewel
+
+            div(props.messageBoxStyle) {
+                div("msgbox") {
+                    div("msgboxtop") {
+                        +"コミュ達成報酬"
+                    }
+                    div("msgboxbody") {
+                        div {
+                            img {
+                                attrs.src = "/clip/jewel.jpg"
+                            }
+
+                            span("itemname") {
+                                +"ミリオンジュエル"
+
+                                span("red") { +"50" }
+                                +"個"
+                            }
+                        }
+
+                        div("notice") {
+                            span {
+                                icon { +"error_icon" }
+
+                                +"獲得したアイテムはプレゼントから受け取れます"
+                            }
+                        }
+                    }
+                    div("msgboxfoot") {
+                        a(classes = "button") {
+                            attrs.onClickFunction = { setState { showMillionJewel = false } }
+
+                            +"閉じる"
+                        }
+                    }
                 }
             }
         }
