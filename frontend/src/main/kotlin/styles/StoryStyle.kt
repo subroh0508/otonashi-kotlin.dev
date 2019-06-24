@@ -20,8 +20,8 @@ val storyStyle: StylesSet.() -> Unit = {
         }
     }
     "messageBox" {
-        width = 640.px
-        height = 320.px
+        width = 1280.px
+        height = 480.px
         top = 0.px
         bottom = 0.px
         left = 0.px
@@ -35,11 +35,11 @@ val storyStyle: StylesSet.() -> Unit = {
             boxShadow(rgba(1, 1, 1, 0.4), offsetX = 0.px, offsetY = 0.px, blurRadius = 15.px)
         }
         "&& .msgboxtop" {
-            height = 50.px
+            height = 100.px
             background = "linear-gradient(#fbe988, #c5b36b)"
             color = Color("#333333")
             padding(8.px, 10.px)
-            fontSize = 24.px
+            fontSize = 48.px
             fontWeight = FontWeight.bold
             borderTopLeftRadius = 20.px
             borderTopRightRadius = 20.px
@@ -50,20 +50,20 @@ val storyStyle: StylesSet.() -> Unit = {
             }
         }
         "&& .msgboxbody" {
-            height = 160.px
+            height = 320.px
             background = "white"
-            fontSize = 18.px
+            fontSize = 36.px
             padding(7.px, 14.px)
 
             descendants("img") {
-                width = 80.px
-                height = 80.px
+                width = 160.px
+                height = 160.px
                 float = Float.left
-                margin(15.px, 20.px, 15.px, 30.px)
+                margin(30.px, 40.px, 30.px, 60.px)
             }
 
             descendants(".itemname") {
-                lineHeight = LineHeight("110px")
+                lineHeight = LineHeight("220px")
             }
 
             descendants(".red") {
@@ -73,7 +73,9 @@ val storyStyle: StylesSet.() -> Unit = {
 
             descendants(".notice") {
                 descendants(".material-icons") {
-                    verticalAlign = VerticalAlign.bottom
+                    fontSize = 36.px
+                    top = 4.px
+                    position = Position.relative
                 }
 
                 textAlign = TextAlign.center
@@ -92,14 +94,14 @@ val storyStyle: StylesSet.() -> Unit = {
             boxSizing = BoxSizing.borderBox
             position = Position.relative
             background = "linear-gradient(80deg, #f9f9f9, #e1edf5)"
-            padding(4.px, 40.px)
+            padding(4.px, 80.px)
             margin(5.px)
             declarations["color"] = "black !important"
             textDecoration = TextDecoration.none
             borderRadius = 50.px
             border(1.px, BorderStyle.solid, Color.black)
             boxShadow(Color.darkGray, 0.px, 0.px, 0.px, 2.px)
-            fontSize = 24.px
+            fontSize = 48.px
             fontWeight = FontWeight.bold
             overflow = Overflow.auto
 
