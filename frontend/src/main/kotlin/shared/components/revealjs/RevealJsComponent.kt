@@ -15,6 +15,22 @@ class RevealJsComponent : RComponent<RProps, RState>() {
     override fun componentDidMount() {
         revealBuilder("reveal-frame") {
             section {
+                attributes["data-background-image"] = "/clip/waiting.png"
+                attributes["data-background-size"] = "contain"
+            }
+
+            section {
+                attributes["data-background-video"] = "/clip/opening.mp4"
+                attributes["data-background-size"] = "contain"
+            }
+
+            section {
+                attributes["data-transition"] = "fade-in fade-out"
+                attributes["data-background-image"] = "/clip/title.png"
+                attributes["data-background-size"] = "contain"
+            }
+
+            section {
                 attributes["data-background-video"] = "/clip/01.mp4"
                 attributes["data-background-size"] = "contain"
 
@@ -677,10 +693,6 @@ class RevealJsComponent : RComponent<RProps, RState>() {
                         +"私、精一杯頑張りますから、これからよろしくお願いしますね！"
                     }
                 }
-            }
-
-            section {
-                +"こんな感じのコミュが書きたい！！！！！！！！"
             }
         }
     }
