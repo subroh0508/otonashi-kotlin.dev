@@ -8,6 +8,10 @@ import kotlinx.css.properties.boxShadow
 import materialui.styles.StylesSet
 
 val storyStyle: StylesSet.() -> Unit = {
+    "root" {
+        margin(0.px, 40.px)
+    }
+
     "content" {
         height = 768.px
         paddingTop = 24.px
