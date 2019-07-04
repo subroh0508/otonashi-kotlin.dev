@@ -432,7 +432,7 @@ class RevealJsComponent : RComponent<RProps, RState>() {
                         +"…！　おやすみ、でしたね。"
                     }
                     p("fragment script-content") {
-                        +"PC開きっぱなし寝ちゃうなんて、本当にお疲れ様です。"
+                        +"PC開きっぱなしで寝ちゃうなんて、本当にお疲れ様です。"
                     }
                 }
             }
