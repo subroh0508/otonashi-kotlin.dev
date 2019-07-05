@@ -76,7 +76,7 @@ class AppFrame : RComponent<AppFrameProps, AppFrameState>() {
                 typography {
                     attrs.variant = TypographyVariant.h6
 
-                    +"Le@rning Kotlin"
+                    +"小鳥さんの自習室"
                 }
 
                 div(props.navigationsStyle) {
