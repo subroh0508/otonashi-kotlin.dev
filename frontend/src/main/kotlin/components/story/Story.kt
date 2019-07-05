@@ -4,7 +4,7 @@ import kotlinx.html.js.onClickFunction
 import materialui.components.button.button
 import materialui.components.button.enums.ButtonColor
 import materialui.components.card.card
-import materialui.components.cardcontent.cardContent
+import materialui.components.cardactions.cardActions
 import materialui.components.cardheader.cardHeader
 import materialui.components.dialog.dialog
 import materialui.components.dialog.enums.DialogMaxWidth
@@ -84,9 +84,9 @@ class Story : RComponent<StoryProps, StoryState>() {
                         }
                     }
 
-                    cardContent {
-                        img { attrs.src = "/clip/17.png"; attrs.width = "100%" }
-                    }
+                    img { attrs.src = "/clip/17.png"; attrs.width = "100%" }
+
+                    cardActions {}
                 }
             }
         }
