@@ -1,8 +1,6 @@
 package styles
 
-import kotlinx.css.Display
-import kotlinx.css.pct
-import kotlinx.css.px
+import kotlinx.css.*
 import materialui.styles.StylesSet
 import materialui.styles.breakpoint.Breakpoint
 import materialui.styles.breakpoint.up

@@ -1,8 +1,6 @@
 package shared.components
 
-import kotlinx.css.Display
-import kotlinx.css.TextAlign
-import kotlinx.css.pct
+import kotlinx.css.*
 import materialui.styles.childWithStyles
 import react.RBuilder
 import react.RProps

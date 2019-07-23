@@ -1,11 +1,9 @@
-import org.jetbrains.kotlin.gradle.frontend.webpack.WebPackExtension
-import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfigWriter
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-    id("kotlin2js")
+    kotlin("multiplatform")
     id("kotlin-dce-js")
-    id("org.jetbrains.kotlin.frontend")
 }
 
 group = "net.subroh0508.otonashikotlin.dev"
@@ -14,18 +12,46 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     jcenter()
-    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap-1.1")
     maven(url = "http://dl.bintray.com/kotlinx/kotlinx")
     maven(url = "http://dl.bintray.com/kotlin/kotlin-js-wrappers")
 }
 
-dependencies {
-    implementation(Dep.KotlinJs.stdlib)
-    implementation(Dep.KotlinJs.html)
-    implementation(Dep.KotlinJs.wrappers)
-    testImplementation(Dep.KotlinJs.test)
-}
+kotlin {
+    js {
+        compilations.all {
+            compileKotlinTask.kotlinOptions {
+                metaInfo = true
+                outputFile = "${project.buildDir.path}/js/${project.name}.js"
+                sourceMap = true
+                sourceMapEmbedSources = "always"
+                moduleKind = "commonjs"
+                main = "call"
+            }
+        }
+        browser {
+            runTask {
+                devServer = KotlinWebpackConfigWriter.DevServer(
+                    contentBase = listOf("${project.buildDir.path}/js/min")
+                )
+            }
+        }
+    }
 
+    sourceSets {
+        val jsMain by getting {
+            dependencies {
+                implementation(Dep.KotlinJs.stdlib)
+                implementation(Dep.KotlinJs.html)
+                implementation(Dep.KotlinJs.wrappers)
+
+                implementation(npm("core-js", "~3.1.4"))
+                implementation(npm("reveal.js"))
+            }
+        }
+    }
+}
+/*
 kotlinFrontend {
     sourceMaps = true
 
@@ -50,40 +76,17 @@ kotlinFrontend {
         }
     }
 }
-
-val compileKotlin2Js by tasks.getting(Kotlin2JsCompile::class) {
-    kotlinOptions {
-        metaInfo = true
-        outputFile = "${project.buildDir.path}/js/${project.name}.js"
-        sourceMap = true
-        sourceMapEmbedSources = "always"
-        moduleKind = "commonjs"
-        main = "call"
-    }
-}
-
-val compileTestKotlin2Js by tasks.getting(Kotlin2JsCompile::class) {
-    kotlinOptions {
-        metaInfo = true
-        outputFile = "${project.buildDir.path}/js-tests/${project.name}-tests.js"
-        sourceMap = true
-        moduleKind = "commonjs"
-        main = "call"
-    }
-}
-
-val runDceKotlinJs by tasks.getting(KotlinJsDce::class)
+*/
 
 val copyBundleJs by tasks.registering(Copy::class) {
     val frontendProject = rootProject.subprojects.find { subproject -> subproject.name == "frontend" } ?: return@registering
 
     from(file(project.buildDir.path + "/bundle/revealjs-client.bundle.js"))
-    into(file(frontendProject.sourceSets["main"].resources.srcDirs.first()))
+    into(file(frontendProject.kotlin.sourceSets["jsMain"].resources.srcDirs.first()))
 }
 
-afterEvaluate {
-    tasks["webpack-bundle"].dependsOn(runDceKotlinJs)
-    tasks["webpack-run"].dependsOn(runDceKotlinJs)
+val runDceJsKotlin by tasks.getting(KotlinJsDce::class)
 
-    tasks["build"].finalizedBy(copyBundleJs)
+afterEvaluate {
+    tasks["build"].finalizedBy(copyBundleJs, runDceJsKotlin)
 }

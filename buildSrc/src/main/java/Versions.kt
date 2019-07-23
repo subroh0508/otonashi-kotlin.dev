@@ -1,11 +1,11 @@
 @Suppress("unused")
 object Versions {
-    const val kotlin = "1.3.31"
+    const val kotlin = "1.3.41"
     const val kotlinFrontendPlugin = "0.0.45"
     const val kotlinxHtml = "0.6.12"
-    const val kotlinReact = "16.6.0-pre.71-kotlin-1.3.31"
-    const val kotlinJsWrappers = "1.0.0-pre.71-kotlin-1.3.31"
-    const val kotlinMaterialUi = "0.1.15"
-    const val ktor = "1.2.1"
+    const val kotlinReact = "16.6.0-pre.80-kotlin-1.3.41"
+    const val kotlinJsWrappers = "1.0.0-pre.80-kotlin-1.3.41"
+    const val kotlinMaterialUi = "0.1.16"
+    const val ktor = "1.2.2"
     const val logback = "1.2.1"
 }
