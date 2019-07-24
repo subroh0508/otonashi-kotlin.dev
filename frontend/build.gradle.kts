@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfigWriter
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-    kotlin("multiplatform")
+    kotlin("js")
     id("kotlin-dce-js")
 }
 
@@ -12,7 +12,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     jcenter()
-    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap-1.1")
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     maven(url = "http://dl.bintray.com/kotlinx/kotlinx")
     maven(url = "http://dl.bintray.com/kotlin/kotlin-js-wrappers")
 }
@@ -20,20 +20,21 @@ repositories {
 val resourceDir = "${rootProject.buildDir}/js/packages/${rootProject.name}-${project.name}/js/min"
 
 kotlin {
-    js {
+    target {
         useCommonJs()
         browser {
             runTask {
                 sourceMaps = true
                 devServer = KotlinWebpackConfigWriter.DevServer(
-                    contentBase = listOf(compilation.output.resourcesDir.canonicalPath)
+                    port = 8088,
+                    contentBase = listOf(resourceDir)
                 )
             }
         }
     }
 
     sourceSets {
-        val jsMain by getting {
+        val main by getting {
             dependencies {
                 implementation(Dep.KotlinJs.stdlib)
                 implementation(Dep.KotlinJs.html)
@@ -43,6 +44,7 @@ kotlin {
                 implementation(Dep.KotlinJs.materialUi)
                 implementation(Dep.Ktor.jsClient)
 
+                implementation(npm("core-js", "~3.1.4"))
                 implementation(npm("text-encoding"))
                 implementation(npm("bufferutil"))
                 implementation(npm("fs"))
@@ -63,49 +65,18 @@ kotlin {
     }
 }
 
-/*
-kotlinFrontend {
-    sourceMaps = true
-
-    npm {
-        dependency("kotlin-playground")
-        dependency("react")
-        dependency("react-dom")
-        dependency("@reach/router")
-        dependency("react-markdown")
-        dependency("inline-style-prefixer")
-        dependency("react-swipeable-views")
-        dependency("reveal.js")
-
-        devDependency("css-loader")
-        devDependency("style-loader")
-        devDependency("file-loader")
-        devDependency("url-loader")
-        devDependency("babel-loader")
-        devDependency("babel-core")
-        devDependency("karma")
-    }
-
-    bundle<WebPackExtension>("webpack") {
-        (this as WebPackExtension).apply {
-            bundleName = "main"
-            contentPath = file(project.buildDir.path + "/js/min")
-            //mode = "production"
-        }
-    }
-}
-
-*/
-
 val copyResources by tasks.registering(Copy::class) {
-    val mainSrc = kotlin.sourceSets["jsMain"]
+    val mainSrc = kotlin.sourceSets["main"]
     from(mainSrc.resources.srcDirs)
     into(file(resourceDir))
 }
 
-val runDceJsKotlin by tasks.getting(KotlinJsDce::class)
+// 動かない
+// Kotlin/JSでWebpackのoptimizeやdceができるようになるのは1.3.50から
+// https://youtrack.jetbrains.com/issue/KT-32323
+val runDceKotlin by tasks.getting(KotlinJsDce::class)
 
 afterEvaluate {
-    tasks["build"].dependsOn(copyResources, runDceJsKotlin)
-    tasks["jsRun"].dependsOn(copyResources, runDceJsKotlin)
+    tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
+    tasks["browserRun"].dependsOn(copyResources, runDceKotlin)
 }
