@@ -46,15 +46,11 @@ kotlin {
 
                 implementation(npm("core-js", "~3.1.4"))
                 implementation(npm("text-encoding"))
-                implementation(npm("bufferutil"))
-                implementation(npm("fs"))
-                implementation(npm("utf-8-validate"))
                 implementation(npm("kotlin-playground"))
                 implementation(npm("react"))
                 implementation(npm("react-dom"))
                 implementation(npm("@reach/router"))
                 implementation(npm("react-markdown"))
-                implementation(npm("@jetbrains/kotlin-styled", "1.0.0-pre.80"))
                 implementation(npm("styled-components", "3.4.10"))
                 implementation(npm("inline-style-prefixer"))
                 implementation(npm("react-swipeable-views"))
@@ -77,6 +73,6 @@ val copyResources by tasks.registering(Copy::class) {
 val runDceKotlin by tasks.getting(KotlinJsDce::class)
 
 afterEvaluate {
-    tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
-    tasks["browserRun"].dependsOn(copyResources, runDceKotlin)
+    //tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
+    tasks["run"].dependsOn(copyResources, runDceKotlin)
 }
