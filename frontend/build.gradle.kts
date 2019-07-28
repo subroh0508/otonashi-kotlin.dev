@@ -44,17 +44,11 @@ kotlin {
                 implementation(Dep.KotlinJs.materialUi)
                 implementation(Dep.Ktor.jsClient)
 
-                implementation(npm("core-js", "~3.1.4"))
                 implementation(npm("text-encoding"))
                 implementation(npm("kotlin-playground"))
-                implementation(npm("react"))
-                implementation(npm("react-dom"))
                 implementation(npm("@reach/router"))
                 implementation(npm("react-markdown"))
-                implementation(npm("styled-components", "3.4.10"))
-                implementation(npm("inline-style-prefixer"))
                 implementation(npm("react-swipeable-views"))
-                implementation(npm("@material-ui/core"))
                 implementation(npm("reveal.js"))
             }
         }
