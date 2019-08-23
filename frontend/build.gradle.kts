@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfigWriter
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
@@ -25,10 +25,15 @@ kotlin {
         browser {
             runTask {
                 sourceMaps = true
-                devServer = KotlinWebpackConfigWriter.DevServer(
+                devServer = KotlinWebpackConfig.DevServer(
                     port = 8088,
                     contentBase = listOf(resourceDir)
                 )
+                archiveFileName = "otonashikotlin.dev-frontend.js"
+            }
+            webpackTask {
+                sourceMaps = true
+                archiveFileName = "otonashikotlin.dev-frontend.js"
             }
         }
     }
@@ -67,6 +72,6 @@ val copyResources by tasks.registering(Copy::class) {
 val runDceKotlin by tasks.getting(KotlinJsDce::class)
 
 afterEvaluate {
-    //tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
-    tasks["run"].dependsOn(copyResources, runDceKotlin)
+    tasks["browserWebpack"].dependsOn(copyResources/*, runDceKotlin*/)
+    tasks["run"].dependsOn(copyResources/*, runDceKotlin*/)
 }
