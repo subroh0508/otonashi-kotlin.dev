@@ -1,11 +1,8 @@
-import org.jetbrains.kotlin.gradle.frontend.webpack.WebPackExtension
-import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-    id("kotlin2js")
+    kotlin("js")
     id("kotlin-dce-js")
-    id("org.jetbrains.kotlin.frontend")
 }
 
 group = "net.subroh0508.otonashikotlin.dev"
@@ -19,71 +16,47 @@ repositories {
     maven(url = "http://dl.bintray.com/kotlin/kotlin-js-wrappers")
 }
 
-dependencies {
-    implementation(Dep.KotlinJs.stdlib)
-    implementation(Dep.KotlinJs.html)
-    implementation(Dep.KotlinJs.wrappers)
-    testImplementation(Dep.KotlinJs.test)
-}
-
-kotlinFrontend {
-    sourceMaps = true
-
-    npm {
-        dependency("core-js", "~3.1.4")
-        dependency("reveal.js")
-
-        devDependency("css-loader")
-        devDependency("style-loader")
-        devDependency("file-loader")
-        devDependency("url-loader")
-        devDependency("babel-loader")
-        devDependency("babel-core")
-        devDependency("karma")
+kotlin {
+    target {
+        useCommonJs()
+        browser {
+            webpackTask {
+                sourceMaps = false
+                archiveFileName = "revealjs-client.bundle.js"
+            }
+        }
     }
 
-    bundle<WebPackExtension>("webpack") {
-        (this as WebPackExtension).apply {
-            bundleName = "revealjs-client"
-            contentPath = file(project.buildDir.path + "/js/min")
-            //mode = "production"
+    sourceSets {
+        val main by getting {
+            dependencies {
+                implementation(Dep.KotlinJs.stdlib)
+                implementation(Dep.KotlinJs.html)
+                implementation(Dep.KotlinJs.wrappers)
+
+                implementation(npm("core-js", "~3.1.4"))
+                implementation(npm("css-loader"))
+                implementation(npm("style-loader"))
+                implementation(npm("url-loader"))
+                implementation(npm("reveal.js"))
+            }
         }
     }
 }
 
-val compileKotlin2Js by tasks.getting(Kotlin2JsCompile::class) {
-    kotlinOptions {
-        metaInfo = true
-        outputFile = "${project.buildDir.path}/js/${project.name}.js"
-        sourceMap = true
-        sourceMapEmbedSources = "always"
-        moduleKind = "commonjs"
-        main = "call"
-    }
-}
-
-val compileTestKotlin2Js by tasks.getting(Kotlin2JsCompile::class) {
-    kotlinOptions {
-        metaInfo = true
-        outputFile = "${project.buildDir.path}/js-tests/${project.name}-tests.js"
-        sourceMap = true
-        moduleKind = "commonjs"
-        main = "call"
-    }
-}
-
-val runDceKotlinJs by tasks.getting(KotlinJsDce::class)
-
 val copyBundleJs by tasks.registering(Copy::class) {
     val frontendProject = rootProject.subprojects.find { subproject -> subproject.name == "frontend" } ?: return@registering
 
-    from(file(project.buildDir.path + "/bundle/revealjs-client.bundle.js"))
-    into(file(frontendProject.sourceSets["main"].resources.srcDirs.first()))
+    from(file(project.buildDir.path + "/libs/${rootProject.name}-${project.name}.js"))
+    into(file(frontendProject.kotlin.sourceSets["main"].resources.srcDirs.first()))
+}
+
+val runDceKotlin by tasks.getting(KotlinJsDce::class) {
+    dceOptions {
+        outputDirectory = tasks.compileKotlinJs.get().outputFile.parent
+    }
 }
 
 afterEvaluate {
-    tasks["webpack-bundle"].dependsOn(runDceKotlinJs)
-    tasks["webpack-run"].dependsOn(runDceKotlinJs)
-
-    tasks["build"].finalizedBy(copyBundleJs)
+    tasks["browserWebpack"].dependsOn(runDceKotlin)
 }

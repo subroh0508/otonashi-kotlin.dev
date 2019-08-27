@@ -1,11 +1,9 @@
-import org.jetbrains.kotlin.gradle.frontend.webpack.WebPackExtension
-import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-    id("kotlin2js")
+    kotlin("js")
     id("kotlin-dce-js")
-    id("org.jetbrains.kotlin.frontend")
 }
 
 group = "net.subroh0508.otonashikotlin.dev"
@@ -19,78 +17,62 @@ repositories {
     maven(url = "http://dl.bintray.com/kotlin/kotlin-js-wrappers")
 }
 
-dependencies {
-    implementation(Dep.KotlinJs.stdlib)
-    implementation(Dep.KotlinJs.html)
-    implementation(Dep.KotlinJs.react)
-    implementation(Dep.KotlinJs.reactDom)
-    implementation(Dep.KotlinJs.wrappers)
-    implementation(Dep.KotlinJs.materialUi)
-    implementation(Dep.Ktor.jsClient)
-    testImplementation(Dep.KotlinJs.test)
-}
+val resourcesDir = "${rootProject.buildDir}/js/packages/${rootProject.name}-${project.name}/kotlin/resources"
 
-kotlinFrontend {
-    sourceMaps = true
-
-    npm {
-        dependency("kotlin-playground")
-        dependency("react")
-        dependency("react-dom")
-        dependency("@reach/router")
-        dependency("react-markdown")
-        dependency("inline-style-prefixer")
-        dependency("react-swipeable-views")
-        dependency("reveal.js")
-
-        devDependency("css-loader")
-        devDependency("style-loader")
-        devDependency("file-loader")
-        devDependency("url-loader")
-        devDependency("babel-loader")
-        devDependency("babel-core")
-        devDependency("karma")
-    }
-
-    bundle<WebPackExtension>("webpack") {
-        (this as WebPackExtension).apply {
-            bundleName = "main"
-            contentPath = file(project.buildDir.path + "/js/min")
-            //mode = "production"
+kotlin {
+    target {
+        useCommonJs()
+        browser {
+            runTask {
+                sourceMaps = true
+                devServer = KotlinWebpackConfig.DevServer(
+                    port = 8088,
+                    contentBase = listOf(resourcesDir)
+                )
+                archiveFileName = "otonashikotlin.dev-frontend.js"
+            }
+            webpackTask {
+                sourceMaps = false
+                archiveFileName = "otonashikotlin.dev-frontend.js"
+            }
         }
     }
-}
 
-val compileKotlin2Js by tasks.getting(Kotlin2JsCompile::class) {
-    kotlinOptions {
-        metaInfo = true
-        outputFile = "${project.buildDir.path}/js/${project.name}.js"
-        sourceMap = true
-        sourceMapEmbedSources = "always"
-        moduleKind = "commonjs"
-        main = "call"
-    }
-}
+    sourceSets {
+        val main by getting {
+            dependencies {
+                implementation(Dep.KotlinJs.stdlib)
+                implementation(Dep.KotlinJs.html)
+                implementation(Dep.KotlinJs.react)
+                implementation(Dep.KotlinJs.reactDom)
+                implementation(Dep.KotlinJs.wrappers)
+                implementation(Dep.KotlinJs.materialUi)
+                implementation(Dep.Ktor.jsClient)
 
-val compileTestKotlin2Js by tasks.getting(Kotlin2JsCompile::class) {
-    kotlinOptions {
-        metaInfo = true
-        outputFile = "${project.buildDir.path}/js-tests/${project.name}-tests.js"
-        sourceMap = true
-        moduleKind = "commonjs"
-        main = "call"
+                implementation(npm("text-encoding"))
+                implementation(npm("kotlin-playground"))
+                implementation(npm("@reach/router"))
+                implementation(npm("react-markdown"))
+                implementation(npm("react-swipeable-views"))
+                implementation(npm("reveal.js"))
+            }
+        }
     }
 }
 
 val copyResources by tasks.registering(Copy::class) {
     val mainSrc = kotlin.sourceSets["main"]
     from(mainSrc.resources.srcDirs)
-    into(file(project.buildDir.path + "/js/min"))
+    into(file(resourcesDir))
 }
 
-val runDceKotlinJs by tasks.getting(KotlinJsDce::class)
+val runDceKotlin by tasks.getting(KotlinJsDce::class) {
+    dceOptions {
+        outputDirectory = tasks.compileKotlinJs.get().outputFile.parent
+    }
+}
 
 afterEvaluate {
-    tasks["webpack-bundle"].dependsOn(copyResources, runDceKotlinJs)
-    tasks["webpack-run"].dependsOn(copyResources, runDceKotlinJs)
+    tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
+    tasks["browserRun"].dependsOn(copyResources)
 }

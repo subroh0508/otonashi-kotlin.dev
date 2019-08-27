@@ -3,6 +3,7 @@ package components.drawer.koans
 import components.koans.sections.Section
 import kotlinext.js.jsObject
 import kotlinx.css.FontWeight
+import kotlinx.css.fontWeight
 import kotlinx.html.NAV
 import kotlinx.html.js.onClickFunction
 import materialui.components.collapse.collapse

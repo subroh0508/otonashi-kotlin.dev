@@ -1,8 +1,6 @@
 package components.koans
 
-import kotlinx.css.Color
-import kotlinx.css.padding
-import kotlinx.css.px
+import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import materialui.components.icon.enums.IconColor
 import materialui.components.icon.icon

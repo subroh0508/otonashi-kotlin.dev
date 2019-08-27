@@ -5,15 +5,15 @@ include("frontend", "backend", "revealjs")
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
+        mavenCentral()
     }
 
     resolutionStrategy {
         eachPlugin {
-            when (requested.id.id) {
-                "kotlin2js", "kotlin-dce-js", "org.jetbrains.kotlin.jvm" -> useModule(Dep.Plugin.kotlinGradle)
-                "org.jetbrains.kotlin.frontend" -> useModule(Dep.Plugin.kotlinFrontend)
-                "kotlinx-serialization" -> useModule(Dep.Plugin.kotlinxSerialization)
+            when {
+                requested.id.id.startsWith("org.jetbrains.kotlin")
+                        || requested.id.id == "kotlin-dce-js" -> useModule(Dep.Plugin.kotlinGradle)
+                requested.id.id == "kotlinx-serialization" -> useModule(Dep.Plugin.kotlinxSerialization)
             }
         }
     }

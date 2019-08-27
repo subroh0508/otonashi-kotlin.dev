@@ -1,8 +1,6 @@
 package styles
 
-import kotlinx.css.padding
-import kotlinx.css.pct
-import kotlinx.css.px
+import kotlinx.css.*
 import materialui.styles.StylesSet
 
 val playgroundStyle: StylesSet.() -> Unit = {
