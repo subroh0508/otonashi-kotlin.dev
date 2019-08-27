@@ -74,5 +74,5 @@ val runDceKotlin by tasks.getting(KotlinJsDce::class) {
 
 afterEvaluate {
     tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
-    tasks["browserRun"].dependsOn(copyResources, runDceKotlin)
+    tasks["browserRun"].dependsOn(copyResources)
 }
