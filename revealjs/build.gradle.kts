@@ -19,7 +19,12 @@ repositories {
 kotlin {
     target {
         useCommonJs()
-        browser {}
+        browser {
+            webpackTask {
+                sourceMaps = false
+                archiveFileName = "revealjs-client.bundle.js"
+            }
+        }
     }
 
     sourceSets {
@@ -46,10 +51,11 @@ val copyBundleJs by tasks.registering(Copy::class) {
     into(file(frontendProject.kotlin.sourceSets["main"].resources.srcDirs.first()))
 }
 
-// 動かない
-// Kotlin/JSでWebpackのoptimizeやdceができるようになるのは1.3.50から
-// https://youtrack.jetbrains.com/issue/KT-32323
-val runDceKotlin by tasks.getting(KotlinJsDce::class)
+val runDceKotlin by tasks.getting(KotlinJsDce::class) {
+    dceOptions {
+        outputDirectory = tasks.compileKotlinJs.get().outputFile.parent
+    }
+}
 
 afterEvaluate {
     tasks["browserWebpack"].dependsOn(runDceKotlin)

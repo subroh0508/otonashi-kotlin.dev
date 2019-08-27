@@ -32,7 +32,7 @@ kotlin {
                 archiveFileName = "otonashikotlin.dev-frontend.js"
             }
             webpackTask {
-                sourceMaps = true
+                sourceMaps = false
                 archiveFileName = "otonashikotlin.dev-frontend.js"
             }
         }
