@@ -66,10 +66,6 @@ val copyResources by tasks.registering(Copy::class) {
     into(file(resourcesDir))
 }
 
-// 動かない
-// Kotlin/JSでWebpackのoptimizeやdceができるようになるのは1.3.50から
-// https://youtrack.jetbrains.com/issue/KT-32323
-
 val runDceKotlin by tasks.getting(KotlinJsDce::class) {
     dceOptions {
         outputDirectory = tasks.compileKotlinJs.get().outputFile.parent
