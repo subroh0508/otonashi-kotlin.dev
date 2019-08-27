@@ -17,7 +17,7 @@ repositories {
     maven(url = "http://dl.bintray.com/kotlin/kotlin-js-wrappers")
 }
 
-val resourceDir = "${rootProject.buildDir}/js/packages/${rootProject.name}-${project.name}/js/min"
+val resourcesDir = "${rootProject.buildDir}/js/packages/${rootProject.name}-${project.name}/kotlin/resources"
 
 kotlin {
     target {
@@ -27,7 +27,7 @@ kotlin {
                 sourceMaps = true
                 devServer = KotlinWebpackConfig.DevServer(
                     port = 8088,
-                    contentBase = listOf(resourceDir)
+                    contentBase = listOf(resourcesDir)
                 )
                 archiveFileName = "otonashikotlin.dev-frontend.js"
             }
@@ -63,15 +63,20 @@ kotlin {
 val copyResources by tasks.registering(Copy::class) {
     val mainSrc = kotlin.sourceSets["main"]
     from(mainSrc.resources.srcDirs)
-    into(file(resourceDir))
+    into(file(resourcesDir))
 }
 
 // 動かない
 // Kotlin/JSでWebpackのoptimizeやdceができるようになるのは1.3.50から
 // https://youtrack.jetbrains.com/issue/KT-32323
-val runDceKotlin by tasks.getting(KotlinJsDce::class)
+
+val runDceKotlin by tasks.getting(KotlinJsDce::class) {
+    dceOptions {
+        outputDirectory = tasks.compileKotlinJs.get().outputFile.parent
+    }
+}
 
 afterEvaluate {
-    tasks["browserWebpack"].dependsOn(copyResources/*, runDceKotlin*/)
-    tasks["run"].dependsOn(copyResources/*, runDceKotlin*/)
+    tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
+    tasks["browserRun"].dependsOn(copyResources, runDceKotlin)
 }

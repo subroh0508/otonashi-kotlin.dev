@@ -1,2 +1,3 @@
 var path = require('path');
-config.resolve.modules.unshift(path.resolve("./js/min"));
+config.resolve.modules.unshift(path.resolve("./kotlin"));
+config.resolve.modules.unshift(path.resolve("./kotlin/resources"));
