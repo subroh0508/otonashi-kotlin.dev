@@ -29,11 +29,11 @@ kotlin {
                     port = 8088,
                     contentBase = listOf(resourcesDir)
                 )
-                archiveFileName = "otonashikotlin.dev-frontend.js"
+                outputFileName = "otonashikotlin.dev-frontend.js"
             }
             webpackTask {
                 sourceMaps = false
-                archiveFileName = "otonashikotlin.dev-frontend.js"
+                outputFileName = "otonashikotlin.dev-frontend.js"
             }
         }
     }

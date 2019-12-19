@@ -22,7 +22,7 @@ kotlin {
         browser {
             webpackTask {
                 sourceMaps = false
-                archiveFileName = "revealjs-client.bundle.js"
+                outputFileName = "revealjs-client.bundle.js"
             }
         }
     }
