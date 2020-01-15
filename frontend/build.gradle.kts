@@ -54,6 +54,8 @@ kotlin {
                 implementation(npm("@reach/router"))
                 implementation(npm("react-markdown"))
                 implementation(npm("react-swipeable-views"))
+                implementation(npm("styled-components"))
+                implementation(npm("inline-style-prefixer"))
                 implementation(npm("reveal.js"))
             }
         }
