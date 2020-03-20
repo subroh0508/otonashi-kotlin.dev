@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
     kotlin("js")
-    id("kotlin-dce-js")
 }
 
 group = "net.subroh0508.otonashikotlin.dev"
@@ -42,21 +41,4 @@ kotlin {
             }
         }
     }
-}
-
-val copyBundleJs by tasks.registering(Copy::class) {
-    val frontendProject = rootProject.subprojects.find { subproject -> subproject.name == "frontend" } ?: return@registering
-
-    from(file(project.buildDir.path + "/libs/${rootProject.name}-${project.name}.js"))
-    into(file(frontendProject.kotlin.sourceSets["main"].resources.srcDirs.first()))
-}
-
-val runDceKotlin by tasks.getting(KotlinJsDce::class) {
-    dceOptions {
-        outputDirectory = tasks.compileKotlinJs.get().outputFile.parent
-    }
-}
-
-afterEvaluate {
-    tasks["browserWebpack"].dependsOn(runDceKotlin)
 }

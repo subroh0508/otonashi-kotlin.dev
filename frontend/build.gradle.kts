@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
     kotlin("js")
-    id("kotlin-dce-js")
 }
 
 group = "net.subroh0508.otonashikotlin.dev"
@@ -17,7 +16,7 @@ repositories {
     maven(url = "http://dl.bintray.com/kotlin/kotlin-js-wrappers")
 }
 
-val resourcesDir = "${rootProject.buildDir}/js/packages/${rootProject.name}-${project.name}/kotlin/resources"
+val resourcesDir = "${project.buildDir}/processedResources/Js/main"
 
 kotlin {
     target {
@@ -60,21 +59,4 @@ kotlin {
             }
         }
     }
-}
-
-val copyResources by tasks.registering(Copy::class) {
-    val mainSrc = kotlin.sourceSets["main"]
-    from(mainSrc.resources.srcDirs)
-    into(file(resourcesDir))
-}
-
-val runDceKotlin by tasks.getting(KotlinJsDce::class) {
-    dceOptions {
-        outputDirectory = tasks.compileKotlinJs.get().outputFile.parent
-    }
-}
-
-afterEvaluate {
-    tasks["browserWebpack"].dependsOn(copyResources, runDceKotlin)
-    tasks["browserRun"].dependsOn(copyResources)
 }
