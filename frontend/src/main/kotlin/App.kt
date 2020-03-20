@@ -2,7 +2,7 @@
 import components.appframe.AppFrame
 import materialui.components.cssbaseline.cssBaseline
 import materialui.styles.childWithStyles
-import materialui.styles.muithemeprovider.muiThemeProvider
+import materialui.styles.themeprovider.themeProvider
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -13,7 +13,7 @@ import themes.appTheme
 class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         cssBaseline {  }
-        muiThemeProvider(appTheme) {
+        themeProvider(appTheme) {
             childWithStyles(AppFrame::class, appFrameStyle) {  }
         }
     }

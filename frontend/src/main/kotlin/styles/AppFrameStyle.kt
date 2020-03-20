@@ -14,7 +14,7 @@ val appFrameStyle: StylesSet.() -> Unit = {
         height = 80.px
     }
     "menuButton" {
-        marginRight = (theme.spacing.unit * 2).px
+        marginRight = theme.spacing(2)
         (theme.breakpoints.up(Breakpoint.sm)) {
             display = Display.none
         }
